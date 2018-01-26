@@ -23,7 +23,7 @@ public class RoomUIPoint : MonoBehaviour {
     {
         if (c != null)
         {
-            _points.Add(c.GetComponent<RectTransform>().position);
+            _points.Add(c.GetComponent<RectTransform>().anchoredPosition3D - GetComponent<RectTransform>().anchoredPosition3D);
             
         }
     }
@@ -32,12 +32,12 @@ public class RoomUIPoint : MonoBehaviour {
     {
         List<Vector3> linePoints = new List<Vector3>
         {
-            this.transform.position
+            Vector3.zero
         };
         foreach (Vector3 point in _points)
         {
             linePoints.Add(point);
-            linePoints.Add(this.transform.position);
+            linePoints.Add(Vector3.zero);
         }
         Debug.Log(linePoints.ToArray());
         _lineRender.positionCount = linePoints.Count;
