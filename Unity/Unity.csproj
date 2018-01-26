@@ -284,6 +284,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\RoomCameraManager.cs" />
+    <Compile Include="Assets\Scripts\Rooms\Room.cs" />
+    <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
