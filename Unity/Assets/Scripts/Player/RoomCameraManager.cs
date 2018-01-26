@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomCameraManager : MonoBehaviour {
-
-    [SerializeField]
-    private List<Camera> _cameras;
-    public const string PROPERTY_CAMERAS = "_cameras";
-
-    [SerializeField]
-    private int _currentCamera;
-    public const string PROPERTY_CURRENT_CAMERA = "_currentCamera";
+    
+    public List<Camera> _cameras;
+    
+    public int _currentCamera;
 
 	// Use this for initialization
 	void Start () {
