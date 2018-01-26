@@ -1,0 +1,28 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraManager : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
+    public void CycleCamera(int cameraIndex) {
+
+    }
+
+    public void CycleCameraForward() {
+
+    }
+
+    public void CycleCameraBackward() {
+
+    }
+}
