@@ -24,6 +24,9 @@ public class Room : MonoBehaviour {
 
     public static Room _rootRoom;
 
+    public List<Transform> _hidingPoints;
+    public List<Transform> _stopPoints;
+
     public Transform _cameraPoints;
     public List<RoomDirection> _roomNeighbours;
     public bool _isRoot;
@@ -51,5 +54,20 @@ public class Room : MonoBehaviour {
         }
         return false;
     }
-	
+
+    public Vector3 GetRandomPoint(List<Transform> xforms)
+    {
+        return xforms[Random.Range(0, xforms.Count - 1)].position;
+    }
+
+    public Vector3 GetRandomStopPoint()
+    {
+        return GetRandomPoint(_stopPoints);
+    }
+
+    public Vector3 GetRandomHidingPoint()
+    {
+        return GetRandomPoint(_hidingPoints);
+    }
+
 }

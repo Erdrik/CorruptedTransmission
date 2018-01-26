@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomUIPoint : MonoBehaviour {
 
     public LineRenderer _lineRender;
     private List<Vector3> _points = new List<Vector3>();
     private Room _room;
+
+    public void Start()
+    {
+        GetComponent<Button>().onClick.AddListener(GoToRoom);
+    }
 
     public void ClearLinks()
     {
@@ -45,6 +51,7 @@ public class RoomUIPoint : MonoBehaviour {
 
     public void GoToRoom()
     {
+        Debug.Log("Click");
         if(_room != null)
         {
             RoomCameraManager.GoToRoom(_room);

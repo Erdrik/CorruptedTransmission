@@ -16,7 +16,7 @@ public class RoomCameraManager : MonoBehaviour {
 
     public static void GoToRoom(Room room)
     {
-        _mainStaticCamera.transform.parent = room._cameraPoints;
+        _mainStaticCamera.transform.SetParent(room._cameraPoints,false);
     }
     
 }

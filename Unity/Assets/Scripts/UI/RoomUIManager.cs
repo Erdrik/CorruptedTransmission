@@ -60,6 +60,7 @@ public class RoomUIManager : MonoBehaviour {
                 }
 
             }
+            point.SetRoom(node);
             point.BuildLinks();
             return point;
         }
