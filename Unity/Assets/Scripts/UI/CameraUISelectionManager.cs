@@ -59,9 +59,9 @@ public class CameraUISelectionManager : MonoBehaviour {
 
     private void ClearTextures()
     {
-        foreach (var c in _activeFeeds)
+        foreach (var c in _activeFeeds.Values)
         {
-            Destroy(c.Value);
+            Destroy(c.gameObject);
         }
         _activeFeeds.Clear();
     }
