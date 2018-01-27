@@ -34,6 +34,7 @@ public class Room : MonoBehaviour {
     public static Room[] _rootRooms = new Room[10];
     public static int _maxFloors = 1;
 
+    public List<Transform> _searchPoints;
     public List<Transform> _hidingPoints;
     public List<Transform> _stopPoints;
 
@@ -91,7 +92,9 @@ public class Room : MonoBehaviour {
 
     public Room GetRandomNeighbourRoom() {
         if (_roomNeighbours.Count > 0) {
-            return _roomNeighbours[Random.Range(0, _roomNeighbours.Count - 1)]._room;
+            float random = Random.Range(0, _roomNeighbours.Count);
+            int index = (int)random;
+            return _roomNeighbours[index]._room;
         }
         else {
             Debug.LogError("No neighbours for room[" + name + "]");
