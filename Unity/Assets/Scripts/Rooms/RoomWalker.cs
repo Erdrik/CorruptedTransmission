@@ -67,15 +67,27 @@ public class RoomWalker : MonoBehaviour {
             _agent.remainingDistance > _agent.stoppingDistance;
     }
 
+    public void Wander() {
+        Transform point = _currentRoom.GetRandomStopPoint();
+        if (point != null) {
+            MoveTowards(point.position);
+        }
+    }
+
     public void Hide() {
-        MoveTowards(_currentRoom.GetRandomHidingPoint());
+        Transform point = _currentRoom.GetRandomHidingPoint();
+        if (point != null) {
+            MoveTowards(point.position);
+        }
     }
 
     public void EnterRoom(Room room) {
         if (room != null) {
-            _nextRoom = room;
-            Vector3 destination = room.GetRandomStopPoint();
-            MoveTowards(destination);
+            Transform destination = room.GetRandomStopPoint();
+            if (destination != null) {
+                _nextRoom = room;
+                MoveTowards(destination.position);
+            }
         }
     }
 

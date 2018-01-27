@@ -34,7 +34,6 @@ public class Room : MonoBehaviour {
     public static Room[] _rootRooms = new Room[10];
     public static int _maxFloors = 1;
 
-    public List<Transform> _searchPoints;
     public List<Transform> _hidingPoints;
     public List<Transform> _stopPoints;
 
@@ -104,17 +103,23 @@ public class Room : MonoBehaviour {
         }
     }
 
-    public Vector3 GetRandomPoint(List<Transform> xforms)
+    public Transform GetRandomPoint(List<Transform> xforms)
     {
-        return xforms[Random.Range(0, xforms.Count - 1)].position;
+        if (xforms.Count > 0) {
+            int random = Random.Range(0, xforms.Count);
+            return xforms[random];
+        }
+        else {
+            return null;
+        }
     }
 
-    public Vector3 GetRandomStopPoint()
+    public Transform GetRandomStopPoint()
     {
         return GetRandomPoint(_stopPoints);
     }
 
-    public Vector3 GetRandomHidingPoint()
+    public Transform GetRandomHidingPoint()
     {
         return GetRandomPoint(_hidingPoints);
     }

@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ActionState {
+    start,
+    during,
+    complete
+}
+
 public class Nemesis : MonoBehaviour {
 
     public enum NemesisSpooky {
@@ -18,12 +24,6 @@ public class Nemesis : MonoBehaviour {
         hunt,
         spooky,
         actionLimit
-    }
-
-    public enum ActionState {
-        start,
-        during,
-        complete
     }
 
     public RoomWalker _roomWalker;
@@ -198,7 +198,15 @@ public class Nemesis : MonoBehaviour {
 
     public void Search() {
         if (_actionState == ActionState.start) {
-            _roomWalker.Hide();
+            int random = Random.Range(0, 1);
+            switch (random) {
+                case 0:
+                    _roomWalker.Hide();
+                    break;
+                case 1:
+                    _roomWalker.Wander();
+                    break;
+            }
             _actionState = ActionState.during;
         }
         else if (_roomWalker.AtDestination()) {
