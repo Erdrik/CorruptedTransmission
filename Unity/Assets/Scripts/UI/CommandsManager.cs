@@ -12,6 +12,11 @@ public class CommandsManager : MonoBehaviour {
     public RectTransform _placeButtonRoot;
     public List<Button> _placeButtons = new List<Button>();
 
+    public void Start()
+    {
+        BuildPlaceButtons();
+    }
+
     public void OpenMoveMenu()
     {
         _protocol.InstructMove();
@@ -25,7 +30,7 @@ public class CommandsManager : MonoBehaviour {
 
     public void MoveTo(Room room)
     {
-
+        _protocol.InstructRoom(room);
     }
 
     public void BuildPlaceButtons()
@@ -34,7 +39,14 @@ public class CommandsManager : MonoBehaviour {
         {
             foreach(Room r in RoomCameraManager._instance._rooms)
             {
-
+                Button button = Instantiate(_placeButtonPrefab);
+                button.GetComponent<RectTransform>().SetParent(_placeButtonRoot, false);
+                button.GetComponentInChildren<Text>().text = r._tag;
+                button.onClick.AddListener(() =>
+                {
+                    MoveTo(r);
+                });
+                _placeButtons.Add(button);
             }
         }
     }
