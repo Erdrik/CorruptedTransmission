@@ -34,10 +34,8 @@ public class RoomWalker : MonoBehaviour {
 	}
 
     void OnDrawGizmos() {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward);
-
-        Gizmos.color = Color.magenta;
     }
 
     private void OnTriggerEnter(Collider other) {

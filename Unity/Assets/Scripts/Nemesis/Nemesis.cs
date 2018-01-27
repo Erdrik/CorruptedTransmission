@@ -12,6 +12,7 @@ public class Nemesis : MonoBehaviour {
     }
 
     public enum NemesisAction {
+        chase,
         explore,
         search,
         hunt,
@@ -30,11 +31,19 @@ public class Nemesis : MonoBehaviour {
 
     public ActionState _actionState;
     public NemesisAction _currentActionType;
-    public NemesisSpooky _lastSpooky;
+    public NemesisSpooky _spooky;
     public float _nextActionTime;
 
     public float _minWait;
     public float _maxWait;
+
+    public Transform _head;
+    public Transform _watching;
+    public RaycastHit _watchingRay;
+
+    public Transform _chaseTarget;
+    public float _roamSpeed;
+    public float _chaseSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +52,7 @@ public class Nemesis : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Watch();
         if (_actionState == ActionState.complete) {
             float currentTime = Time.time;
             if (currentTime >= _nextActionTime) {
@@ -52,6 +62,9 @@ public class Nemesis : MonoBehaviour {
         }
         else {
                 switch (_currentActionType) {
+                case NemesisAction.chase:
+                    Chase();
+                    break;
                 case NemesisAction.explore:
                     Explore();
                     break;
@@ -62,11 +75,7 @@ public class Nemesis : MonoBehaviour {
                     Hunt();
                     break;
                 case NemesisAction.spooky:
-                    NemesisSpooky spooky = (NemesisSpooky)Random.Range(0, (int)NemesisSpooky.spookyLimit);
-                    while (spooky != _lastSpooky) {
-                        spooky = (NemesisSpooky)Random.Range(0, (int)NemesisSpooky.spookyLimit);
-                    }
-                    DoSpooky(spooky);
+                    DoSpooky();
                     break;
                 case NemesisAction.actionLimit:
                 default:
@@ -76,14 +85,94 @@ public class Nemesis : MonoBehaviour {
         }
 	}
 
+    private void OnDrawGizmos() {
+        if (_watching != null) {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(_head.transform.position, _head.transform.position + TowardsWatch());
+
+            if (_chaseTarget != null) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(_head.transform.position, _watchingRay.point);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Professor")) {
+            _watching = other.transform;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Professor")) {
+            _watching = null;
+        }
+    }
+    
+    private void Watch() {
+        if (_watching != null) {
+            int layerMaskFunc = 1 << LayerMask.NameToLayer("Nemesis");
+
+            if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, Mathf.Infinity, ~layerMaskFunc)) {
+                if (_watchingRay.collider.CompareTag("Professor")) {
+                    Debug.Log("Found the Professor!");
+                    BeginChase(_watchingRay.transform);
+                }
+            }
+        }
+    }
+
+    private Vector3 TowardsWatch() {
+        Vector3 towards = _watching.transform.position - _head.transform.position;
+        towards.Normalize();
+        return towards;
+    }
+
     private void CompleteAction() {
         _actionState = ActionState.complete;
+        _spooky = ChooseSpooky();
         _currentActionType = NemesisAction.spooky;
     }
 
     private void CompleteSpooky() {
         _actionState = ActionState.complete;
         _currentActionType = (NemesisAction)Random.Range(0, (int)NemesisAction.actionLimit);
+    }
+
+    private void BeginChase(Transform xform) {
+        _chaseTarget = xform;
+        _roomWalker._agent.speed = _chaseSpeed;
+        _currentActionType = NemesisAction.chase;
+        _actionState = ActionState.during;
+    }
+
+    private void StopChase() {
+        _chaseTarget = null;
+        _roomWalker._agent.speed = _roamSpeed;
+        _actionState = ActionState.complete;
+    }
+
+    private void Chase() {
+        if (_actionState == ActionState.start ||
+            _actionState == ActionState.during) {
+            if (_watching == null) {
+                StopChase();
+                _currentActionType = NemesisAction.search;
+            }
+            else if (_chaseTarget == null) {
+                Debug.Log("Lost the target!");
+                StopChase();
+                CompleteSpooky();
+            }
+            else if (_roomWalker._agent.remainingDistance <= _roomWalker._agent.stoppingDistance) {
+                Debug.Log("Caught the target!");
+                StopChase();
+                CompleteSpooky();
+            }
+            else {
+                _roomWalker.MoveTowards(_chaseTarget.position);
+            }
+        }
     }
 
     private void Explore() {
@@ -121,9 +210,8 @@ public class Nemesis : MonoBehaviour {
         }
     }
 
-    private void DoSpooky(NemesisSpooky spooky) {
-        _lastSpooky = spooky;
-        switch (spooky) {
+    private void DoSpooky() {
+        switch (_spooky) {
             case NemesisSpooky.wait:
                 Wait();
                 CompleteSpooky();
@@ -139,7 +227,15 @@ public class Nemesis : MonoBehaviour {
         }
     }
 
-    private void Wait() {
+    private NemesisSpooky ChooseSpooky() {
+        NemesisSpooky spooky = (NemesisSpooky)Random.Range((int)NemesisAction.explore, (int)NemesisSpooky.spookyLimit);
+        //while (spooky != _spooky) { // don't do the same spooky twice
+        //    spooky = (NemesisSpooky)Random.Range((int)NemesisAction.explore, (int)NemesisSpooky.spookyLimit);
+        //}
+        return spooky;
+    }
+
+private void Wait() {
         _nextActionTime = Time.time + Random.Range(_minWait, _maxWait);
     }
 }

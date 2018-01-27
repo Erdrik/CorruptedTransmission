@@ -33,8 +33,7 @@ public class MakeNiceProtocol : MonoBehaviour {
     }
 
     public void InstructMoveToRoom(int index) {
-        _roomCameraManager.ChangeRoom(index);
-        _professor.GoToRoom(_roomCameraManager.CurrentRoom);
+        _professor.GoToRoom(_roomCameraManager.GetRoom(index));
     }
 
     public void InstructMoveToRoom(Room room) {
