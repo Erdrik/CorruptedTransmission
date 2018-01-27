@@ -51,6 +51,11 @@ public class Professor : MonoBehaviour {
         //_roomWalker.MoveTowards(_roomWalker._currentRoom.GetPushButtonPoint());
     }
 
+    public void TouchWithDeath() {
+        Debug.Log("The professor was touched by death!");
+        _roomWalker.Stop();
+    }
+
     private void Complain() {
         Debug.Log("The professor complains about something!");
     }

@@ -349,6 +349,11 @@ Prefab:
       propertyPath: _head
       value: 
       objectReference: {fileID: 1493925373}
+    - target: {fileID: 114242056306128548, guid: 8fd2e78fe1e3ebb4691a92bec783975b,
+        type: 2}
+      propertyPath: _touchDistance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8fd2e78fe1e3ebb4691a92bec783975b, type: 2}
   m_IsPrefabParent: 0

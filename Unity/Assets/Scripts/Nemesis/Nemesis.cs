@@ -45,6 +45,8 @@ public class Nemesis : MonoBehaviour {
     public float _roamSpeed;
     public float _chaseSpeed;
 
+    public float _touchDistance;
+
 	// Use this for initialization
 	void Start () {
         _actionState = ActionState.complete;
@@ -112,11 +114,21 @@ public class Nemesis : MonoBehaviour {
     private void Watch() {
         if (_watching != null) {
             int layerMaskFunc = 1 << LayerMask.NameToLayer("Nemesis");
-
-            if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, Mathf.Infinity, ~layerMaskFunc)) {
-                if (_watchingRay.collider.CompareTag("Professor")) {
-                    Debug.Log("Found the Professor!");
-                    BeginChase(_watchingRay.transform);
+            if (_chaseTarget == null) {
+                if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, Mathf.Infinity, ~layerMaskFunc)) {
+                    if (_watchingRay.collider.CompareTag("Professor")) {
+                        BeginChase(_watchingRay.transform);
+                    }
+                }
+            }
+            else {
+                if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, _touchDistance, ~layerMaskFunc)) {
+                    if (_watchingRay.collider.CompareTag("Professor")) {
+                        Professor professor = _chaseTarget.gameObject.GetComponent<Professor>();
+                        professor.TouchWithDeath();
+                        StopChase();
+                        CompleteAction();
+                    }
                 }
             }
         }
@@ -149,7 +161,7 @@ public class Nemesis : MonoBehaviour {
     private void StopChase() {
         _chaseTarget = null;
         _roomWalker._agent.speed = _roamSpeed;
-        _actionState = ActionState.complete;
+        CompleteAction();
     }
 
     private void Chase() {
@@ -165,7 +177,6 @@ public class Nemesis : MonoBehaviour {
                 CompleteSpooky();
             }
             else if (_roomWalker._agent.remainingDistance <= _roomWalker._agent.stoppingDistance) {
-                Debug.Log("Caught the target!");
                 StopChase();
                 CompleteSpooky();
             }
