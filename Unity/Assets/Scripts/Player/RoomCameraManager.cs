@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class RoomCameraManager : MonoBehaviour {
+
+    public static RoomCameraManager _instance;
+
+    public Room _defaultRoom;
 
     public List<Room> _rooms;
     public Camera _mainCamera;
@@ -33,12 +36,12 @@ public class RoomCameraManager : MonoBehaviour {
         }
     }
 
-    public void ChangeRoom(int index) {
-        if (index >= 0 &&
-            index <= _rooms.Count) {
-            _currentRoom = index;
-            GoToRoom(CurrentRoom);
+    public static void GoToCamera(CameraController camera) {
+        if (_activeRoom != camera._owningRoom) {
+            _instance._cameraUIManager.SetActiveRoom(camera._owningRoom);
+            _activeRoom = camera._owningRoom;
         }
+        _mainStaticCamera.transform.SetParent(camera.transform, false);
     }
     
     public static void GoToCamera(CameraController camera)
