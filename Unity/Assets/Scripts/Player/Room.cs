@@ -34,7 +34,7 @@ public class Room : MonoBehaviour {
     public List<Transform> _hidingPoints;
     public List<Transform> _stopPoints;
 
-    public Transform _cameraPoints;
+    public List<CameraController> _cameraPoints;
     public RoomUIPoint _uiPoint;
     public List<RoomDirection> _roomNeighbours;
     public bool _isRoot;
@@ -45,9 +45,21 @@ public class Room : MonoBehaviour {
         {
             _rootRoom = this;
         }
+        InitaliseCameras();
     }
 
+    public void Start()
+    {
+        
+    }
 
+    private void InitaliseCameras()
+    {
+        foreach (CameraController camera in _cameraPoints)
+        {
+            camera.SetRoom(this);
+        }
+    }
 
     public bool GetNeighbour(Direction direction, out Room resultRoom)
     {

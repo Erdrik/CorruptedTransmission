@@ -286,6 +286,7 @@
     <Compile Include="Assets\Scripts\Player\Room.cs" />
     <Compile Include="Assets\Scripts\Player\RoomCameraManager.cs" />
     <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
+    <Compile Include="Assets\Scripts\UI\CameraUISelectionManager.cs" />
     <Compile Include="Assets\Scripts\UI\CommandsManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIPoint.cs" />

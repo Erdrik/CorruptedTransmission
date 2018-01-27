@@ -23,7 +23,6 @@ public class RoomUIManager : MonoBehaviour {
 
         if (room)
         {
-            Debug.Log(room);
             FindLastNode(room);
         }
     }

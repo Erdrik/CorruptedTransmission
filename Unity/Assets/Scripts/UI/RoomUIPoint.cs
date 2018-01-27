@@ -12,6 +12,7 @@ public class RoomUIPoint : MonoBehaviour {
     public void Start()
     {
         GetComponent<Button>().onClick.AddListener(GoToRoom);
+        transform.Translate(0, 0, -0.001f);
     }
 
     public void ClearLinks()
@@ -36,10 +37,9 @@ public class RoomUIPoint : MonoBehaviour {
         };
         foreach (Vector3 point in _points)
         {
-            linePoints.Add(point);
+            linePoints.Add(point + new Vector3(0,0,3));
             linePoints.Add(Vector3.zero);
         }
-        Debug.Log(linePoints.ToArray());
         _lineRender.positionCount = linePoints.Count;
         _lineRender.SetPositions(linePoints.ToArray());
     }
