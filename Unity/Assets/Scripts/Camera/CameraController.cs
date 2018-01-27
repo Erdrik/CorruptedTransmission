@@ -84,6 +84,13 @@ public class CameraController : MonoBehaviour {
         _owningRoom = r;
     }
 
+    [ContextMenu(" Disable ")]
+    public void Disabled()
+    {
+        _cameraState = CameraState.Disabled;
+    }
+
+
     private void ChangeState(CameraState _newState)
     {
         if(_newState == CameraState.InRoom)
@@ -155,7 +162,7 @@ public class CameraController : MonoBehaviour {
         while (_isRoaming && _yawRoam)
         {
             Debug.Log("start");
-            float currentPoint = _minYaw;
+            float currentPoint = _minYaw + (_currentYaw * _maxYaw);
             _audioSource.Play();
             while (currentPoint <= _maxYaw)
             {
@@ -176,6 +183,15 @@ public class CameraController : MonoBehaviour {
             transform.rotation = _originalOrientation * Quaternion.Euler(0, _minYaw, 0);
             _audioSource.Stop();
             yield return new WaitForSeconds(_delay);
+            _audioSource.Play();
+            while (currentPoint <= (_maxYaw * currentPoint))
+            {
+                currentPoint += _yawRoamSpeed * Time.deltaTime;
+                transform.rotation = _originalOrientation * Quaternion.Euler(0, currentPoint, 0);
+                yield return new WaitForEndOfFrame();
+            }
+            transform.rotation = _originalOrientation * Quaternion.Euler(0, (_maxYaw * currentPoint), 0);
+            _audioSource.Stop();
         }
     }
 

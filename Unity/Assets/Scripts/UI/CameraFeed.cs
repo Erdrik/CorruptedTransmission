@@ -25,8 +25,8 @@ public class CameraFeed : MonoBehaviour {
     {
         if (isActive)
         {
-            GetComponentInChildren<RawImage>().material.mainTexture = null;
-            GetComponentInChildren<RawImage>().color = Color.cyan;
+            GetComponentInChildren<RawImage>().material.mainTexture = Texture2D.whiteTexture;
+            GetComponentInChildren<RawImage>().color = Color.black;
             text.gameObject.SetActive(true);
             isActive = false;
         }

@@ -28,37 +28,42 @@ public class MakeNiceProtocol : MonoBehaviour {
 		
 	}
 
-    public void InstructMoveToRoom() {
-        _professor.GoToRoom(_roomCameraManager.CurrentRoom);
+    public void InstructMove() {
+        _professor.InstructMove();
     }
 
-    public void InstructMoveToRoom(int index) {
-        _roomCameraManager.ChangeRoom(index);
-        _professor.GoToRoom(_roomCameraManager.CurrentRoom);
+    public void InstructRoom(int index) {
+        _professor.InstructRoom(_roomCameraManager.GetRoom(index));
     }
 
-    public void InstructMoveToRoom(Room room) {
-        _professor.GoToRoom(room);
+    public void InstructRoom(Room room)
+    {
+        _professor.InstructRoom(room);
     }
 
     public void InstructGetOut() {
-        _professor.GetOut();
+        _professor.InstructGetOut();
     }
 
     public void InstructGoBack() {
-        _professor.GoBack();
+        _professor.InstructGoBack();
     }
 
     public void InstructStop() {
-        _professor.Stop();
+        _professor.InstructStop();
     }
 
     public void InstructHide() {
-        _professor.Hide();
+        _professor.InstructHide();
     }
 
     public void InstructPushButton() {
-        _professor.PushButton();
+        _professor.InstructActivate();
+    }
+
+    public void InstructLock()
+    {
+        throw new System.NotImplementedException();
     }
 
 }

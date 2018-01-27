@@ -25,10 +25,15 @@ public class MakeNiceProtocolEditor : Editor {
         EditorGUILayout.PropertyField(_roomCameraManager, new GUIContent("Room Camera Manager"));
 
         MakeNiceProtocol makeNice = (MakeNiceProtocol) serializedObject.targetObject;
+
+        if (GUILayout.Button(new GUIContent("Move"))) {
+            makeNice.InstructMove();
+        }
+
         EditorGUILayout.BeginHorizontal();
         _selectedRoom = EditorGUILayout.IntField(new GUIContent("Selected Room"), _selectedRoom);
-        if (GUILayout.Button(new GUIContent("GoToRoom"))) {
-            makeNice.InstructMoveToRoom(_selectedRoom);
+        if (GUILayout.Button(new GUIContent("Room"))) {
+            makeNice.InstructRoom(_selectedRoom);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -46,6 +51,10 @@ public class MakeNiceProtocolEditor : Editor {
 
         if (GUILayout.Button(new GUIContent("Stop"))) {
             makeNice.InstructStop();
+        }
+
+        if (GUILayout.Button(new GUIContent("Push Button"))) {
+            makeNice.InstructPushButton();
         }
 
         serializedObject.ApplyModifiedProperties();
