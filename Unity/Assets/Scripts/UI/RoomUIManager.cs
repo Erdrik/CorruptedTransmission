@@ -78,23 +78,27 @@ public class RoomUIManager : MonoBehaviour {
 
     private RoomUIPoint FindLastNode(Room node, Vector2Int position, HashSet<Room> doneRooms)
     {
+        RoomUIPoint point;
+        if (node._uiPoint)
+        {
+            point = node._uiPoint;
+        }
+        else
+        {
+            point = BuildRoomUIPoint(position, node, 0);
+            point.SetRoom(node);
+            node._uiPoint = point;
+            _RoomUIPoints.Add(point);
+        }
         if (!doneRooms.Contains(node))
         {
             List<Room.RoomDirection> neighbours = node._roomNeighbours;
-            RoomUIPoint point;
-            if (node._uiPoint)
-            {
-                point = node._uiPoint;
-            }
-            else
-            {
-                point = BuildRoomUIPoint(position, node, 0);
-                point.SetRoom(node);
-                node._uiPoint = point;
-            }
+            
+            
+            doneRooms.Add(node);
             foreach (Room.RoomDirection n in neighbours)
             {
-                doneRooms.Add(node);
+                
                 switch (n._roomDirecion)
                 {
                     case Direction.Forward:
@@ -127,10 +131,8 @@ public class RoomUIManager : MonoBehaviour {
 
             }
             point.BuildLinks();
-            _RoomUIPoints.Add(point);
-            return point;
         }
-        return null;
+        return point;
     }
 
     

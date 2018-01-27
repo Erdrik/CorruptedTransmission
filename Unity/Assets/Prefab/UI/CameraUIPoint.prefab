@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRender: {fileID: 120766459042836582}
+  bufferA: -0.01
+  bufferB: 5
 --- !u!114 &114862837082204820
 MonoBehaviour:
   m_ObjectHideFlags: 1

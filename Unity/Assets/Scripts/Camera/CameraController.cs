@@ -149,7 +149,7 @@ public class CameraController : MonoBehaviour {
 
     IEnumerator RoamCamera()
     {
-        while (_isRoaming)
+        while (_isRoaming && _yawRoam)
         {
             Debug.Log("start");
             float currentPoint = _minYaw;
