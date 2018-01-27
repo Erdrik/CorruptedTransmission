@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class CameraUISelectionManager : MonoBehaviour {
 
-    public RectTransform _feedPrefab;
+    public CameraFeed _feedPrefab;
     public Room _activeRoom;
     public RectTransform _root;
 
-    public List<RectTransform> _activeFeeds = new List<RectTransform>();
+    public Dictionary<CameraController,CameraFeed> _activeFeeds = new Dictionary<CameraController,CameraFeed>();
+
+    private void Update()
+    {
+        CheckCameras();
+    }
 
     public void SetActiveRoom(Room room)
     {
@@ -19,33 +24,44 @@ public class CameraUISelectionManager : MonoBehaviour {
         {
             CreateNewTexture(camera);
         }
+        CheckCameras();
     }
 
     private void CheckCameras()
     {
-
+        if (_activeRoom)
+        {
+            foreach (CameraController camera in _activeRoom._cameraPoints)
+            {
+                if (_activeFeeds.ContainsKey(camera))
+                {
+                    if (camera._cameraState != CameraController.CameraState.Disabled)
+                    {
+                        _activeFeeds[camera].EnableTexture();
+                    }
+                    else
+                    {
+                        _activeFeeds[camera].DisableTexture();
+                    }
+                }
+            }
+        }
     }
 
     private void CreateNewTexture(CameraController camera)
     {
-        RectTransform newFeed = Instantiate(_feedPrefab);
-        _activeFeeds.Add(newFeed);
-        newFeed.SetParent(_root, false);
-        newFeed.GetComponentInChildren<RawImage>().material = new Material(newFeed.GetComponentInChildren<RawImage>().material);
-        newFeed.GetComponentInChildren<RawImage>().material.mainTexture = camera._passiveCamera.targetTexture;
-        newFeed.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            RoomCameraManager.GoToCamera(camera);
-            newFeed.GetComponent<Button>().OnDeselect(new UnityEngine.EventSystems.BaseEventData(UnityEngine.EventSystems.EventSystem.current));
-        });
+        CameraFeed newFeed = Instantiate(_feedPrefab);
+        _activeFeeds.Add(camera,newFeed);
+        newFeed.GetComponent<RectTransform>().SetParent(_root, false);
+        newFeed.SetTexture(camera._passiveCamera.targetTexture);
+        newFeed.Init(camera);
     }
 
     private void ClearTextures()
     {
-        for (int i = 0; i < _activeFeeds.Count; i++)
+        foreach (var c in _activeFeeds)
         {
-            Destroy(_activeFeeds[i].gameObject);
-            
+            Destroy(c.Value);
         }
         _activeFeeds.Clear();
     }

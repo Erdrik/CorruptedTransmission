@@ -322,6 +322,7 @@
     <Compile Include="Assets\PostProcessing\Editor\Utils\EditorResources.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Utils\FxStyles.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
+    <Compile Include="Assets\Scripts\Camera\Editor\CameraControllerEditor.cs" />
     <Compile Include="Assets\Scripts\Player\Editor\MakeNiceProtocol_Editor.cs" />
   </ItemGroup>
   <ItemGroup>
