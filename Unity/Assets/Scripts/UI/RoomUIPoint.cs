@@ -52,7 +52,8 @@ public class RoomUIPoint : MonoBehaviour {
     public void GoToRoom()
     {
         Debug.Log("Click");
-        if(_room != null)
+        GetComponent<Button>().OnDeselect(new UnityEngine.EventSystems.BaseEventData(UnityEngine.EventSystems.EventSystem.current));
+        if (_room != null)
         {
             RoomCameraManager.GoToRoom(_room);
         }

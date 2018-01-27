@@ -328,6 +328,9 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraSway.cs" />
+    <Compile Include="Assets\Scripts\Camera\FocusCamera.cs" />
     <Compile Include="Assets\Scripts\Player\Room.cs" />
     <Compile Include="Assets\Scripts\Player\RoomCameraManager.cs" />
     <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
@@ -335,6 +338,7 @@
     <Compile Include="Assets\Scripts\UI\CommandsManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIPoint.cs" />
+    <Compile Include="Assets\Scripts\UI\SoundVisualiser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />

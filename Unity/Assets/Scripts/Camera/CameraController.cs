@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour {
         Disabled
     }
 
+    public AudioSource _audioSource;
     public Camera _passiveCamera;
 
     [Range(-360,0)]
@@ -33,6 +34,10 @@ public class CameraController : MonoBehaviour {
 
     public float _pitchRoamSpeed = 5;
     public float _yawRoamSpeed = 5;
+
+    public float _delay = 1f;
+
+    public bool _isRoaming = false;
 
     public CameraState _cameraState = CameraState.NotWatched;
     private Quaternion _originalOrientation;
@@ -121,7 +126,12 @@ public class CameraController : MonoBehaviour {
 
     void Roam()
     {
-        transform.rotation = _originalOrientation * Quaternion.Euler(0,Mathf.PingPong(Time.time*10, (_maxYaw)-_minYaw)+_minYaw,0);
+        if (!_isRoaming)
+        {
+            _isRoaming = true;
+            StartCoroutine(RoamCamera());
+            
+        }
     }
 
     void CreateRenderTexture()
@@ -137,6 +147,34 @@ public class CameraController : MonoBehaviour {
         _cameraTexture.Release();
     }
 
+    IEnumerator RoamCamera()
+    {
+        while (_isRoaming)
+        {
+            Debug.Log("start");
+            float currentPoint = _minYaw;
+            _audioSource.Play();
+            while (currentPoint <= _maxYaw)
+            {
+                currentPoint += _yawRoamSpeed * Time.deltaTime;
+                transform.rotation = _originalOrientation * Quaternion.Euler(0, currentPoint, 0);
+                yield return new WaitForEndOfFrame();
+            }
+            transform.rotation = _originalOrientation * Quaternion.Euler(0, _maxYaw, 0);
+            _audioSource.Stop();
+            yield return new WaitForSeconds(_delay);
+            _audioSource.Play();
+            while (currentPoint >= _minYaw)
+            {
+                currentPoint -= _yawRoamSpeed * Time.deltaTime;
+                transform.rotation = _originalOrientation * Quaternion.Euler(0, currentPoint, 0);
+                yield return new WaitForEndOfFrame();
+            }
+            transform.rotation = _originalOrientation * Quaternion.Euler(0, _minYaw, 0);
+            _audioSource.Stop();
+            yield return new WaitForSeconds(_delay);
+        }
+    }
 
 
 

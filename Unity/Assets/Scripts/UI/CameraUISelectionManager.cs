@@ -31,6 +31,7 @@ public class CameraUISelectionManager : MonoBehaviour {
         newFeed.GetComponent<Button>().onClick.AddListener(() =>
         {
             RoomCameraManager.GoToCamera(camera);
+            newFeed.GetComponent<Button>().OnDeselect(new UnityEngine.EventSystems.BaseEventData(UnityEngine.EventSystems.EventSystem.current));
         });
     }
 
