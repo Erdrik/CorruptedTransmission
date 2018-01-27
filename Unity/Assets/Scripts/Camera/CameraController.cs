@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _originalOrientation = transform.rotation;
-        _cameraTexture = new RenderTexture(300, 168, 0);
+        _cameraTexture = new RenderTexture(300, 168, 16, RenderTextureFormat.ARGB64);
         _passiveCamera.targetTexture = _cameraTexture;
     }
 	

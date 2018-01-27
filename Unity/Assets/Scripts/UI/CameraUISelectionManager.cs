@@ -9,7 +9,7 @@ public class CameraUISelectionManager : MonoBehaviour {
     public Room _activeRoom;
     public RectTransform _root;
 
-    public List<Image> _activeFeeds = new List<Image>();
+    public List<RectTransform> _activeFeeds = new List<RectTransform>();
 
     public void SetActiveRoom(Room room)
     {
@@ -24,6 +24,7 @@ public class CameraUISelectionManager : MonoBehaviour {
     private void CreateNewTexture(CameraController camera)
     {
         RectTransform newFeed = Instantiate(_feedPrefab);
+        _activeFeeds.Add(newFeed);
         newFeed.SetParent(_root, false);
         newFeed.GetComponentInChildren<RawImage>().material = new Material(newFeed.GetComponentInChildren<RawImage>().material);
         newFeed.GetComponentInChildren<RawImage>().material.mainTexture = camera._passiveCamera.targetTexture;
@@ -37,9 +38,10 @@ public class CameraUISelectionManager : MonoBehaviour {
     {
         for (int i = 0; i < _activeFeeds.Count; i++)
         {
-            Destroy(_activeFeeds[i]);
-            _activeFeeds.RemoveAt(i);
+            Destroy(_activeFeeds[i].gameObject);
+            
         }
+        _activeFeeds.Clear();
     }
 	
 }
