@@ -21,6 +21,9 @@ public class CameraController : MonoBehaviour {
     [Range(0,360)]
     public float _maxPitch = 45;
 
+    [Range(0,1)]
+    public float _currentYaw = 0;
+
     [Range(-360, 0)]
     public float _minYaw = -45;
     [Range(0, 360)]
