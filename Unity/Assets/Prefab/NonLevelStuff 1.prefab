@@ -7171,7 +7171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb87a9d8d2f9a74da3ad4ded024baf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _feedPrefab: {fileID: 0}
+  _feedPrefab: {fileID: 114156079920364804, guid: d2ce10c4d8afda545a48ff97a1be4d5b,
+    type: 2}
   _activeRoom: {fileID: 0}
   _root: {fileID: 224077521712723070}
 --- !u!114 &114076231942558990
