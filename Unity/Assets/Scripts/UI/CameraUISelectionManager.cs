@@ -21,6 +21,11 @@ public class CameraUISelectionManager : MonoBehaviour {
         }
     }
 
+    private void CheckCameras()
+    {
+
+    }
+
     private void CreateNewTexture(CameraController camera)
     {
         RectTransform newFeed = Instantiate(_feedPrefab);
