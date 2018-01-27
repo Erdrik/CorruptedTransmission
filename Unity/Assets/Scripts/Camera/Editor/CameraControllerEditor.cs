@@ -8,6 +8,7 @@ public class CameraControllerEditor : Editor {
 
     private Quaternion _originalQuat;
     private bool _isTesting;
+    private bool _wasTesting;
     float yaw = 0;
 
     private RenderTexture _lastTexture;
@@ -34,11 +35,15 @@ public class CameraControllerEditor : Editor {
         if (_isTesting)
         {
             c.transform.rotation = Quaternion.Slerp(_originalQuat * Quaternion.Euler(0, c._minYaw, 0), _originalQuat * Quaternion.Euler(0, c._maxYaw, 0), yaw);
+        }else if (!_isTesting && _wasTesting)
+        {
+            c.transform.rotation = _originalQuat;
         }
         else
         {
             _originalQuat = c.transform.rotation;
         }
+        _wasTesting = _isTesting;
     }
 
     public override bool HasPreviewGUI()

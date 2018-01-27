@@ -6,15 +6,18 @@ using UnityEngine.UI;
 public class CameraFeed : MonoBehaviour {
 
     private RenderTexture _currentTexture;
-    private bool isActive = true;
+    private bool isActive = false;
+
+    public Text text;
 
     public void Start()
     {
-        GetComponentInChildren<RawImage>().material = new Material(GetComponentInChildren<RawImage>().material);
+        
     }
 
     public void SetTexture(RenderTexture texture)
     {
+        GetComponentInChildren<RawImage>().material = new Material(GetComponentInChildren<RawImage>().material);
         _currentTexture = texture;
     }
 
@@ -23,6 +26,8 @@ public class CameraFeed : MonoBehaviour {
         if (isActive)
         {
             GetComponentInChildren<RawImage>().material.mainTexture = null;
+            GetComponentInChildren<RawImage>().color = Color.cyan;
+            text.gameObject.SetActive(true);
             isActive = false;
         }
     }
@@ -32,6 +37,8 @@ public class CameraFeed : MonoBehaviour {
         if (!isActive)
         {
             GetComponentInChildren<RawImage>().material.mainTexture = _currentTexture;
+            GetComponentInChildren<RawImage>().color = Color.white;
+            text.gameObject.SetActive(false);
             isActive = true;
         }
     }
