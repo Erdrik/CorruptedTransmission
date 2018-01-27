@@ -141,7 +141,7 @@ public class RoomUIManager : MonoBehaviour {
     {
         RoomUIPoint roomPoint = Instantiate<RoomUIPoint>(_RoomUIPointPrefab);
         RectTransform roomPointTransform = roomPoint.GetComponent<RectTransform>();
-        roomPointTransform.SetParent(GetComponent<RectTransform>(), false);
+        roomPointTransform.SetParent(_rootPoint.GetComponent<RectTransform>(), false);
         roomPointTransform.anchoredPosition3D = new Vector2(position.x, position.y) * (_roomSpacing + _roomSize);
         //roomPointTransform.position = new Vector3(roomPointTransform.transform.position.x, roomPointTransform.transform.position.y, 0);
         return roomPoint;

@@ -12,19 +12,25 @@ public class CameraControllerEditor : Editor {
     float yaw = 0;
 
     private RenderTexture _lastTexture;
+    private CameraController _camera;
 
     public void OnEnable()
     {
         _lastTexture = new RenderTexture(1280, 720, 16);
     }
 
+    public void OnDisable()
+    {
+        _camera.transform.rotation = _originalQuat;
+    }
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        CameraController c = (CameraController)target;
-        if(c._passiveCamera)
-        c._passiveCamera.targetTexture = _lastTexture;
+        _camera = (CameraController)target;
+        if(_camera._passiveCamera)
+            _camera._passiveCamera.targetTexture = _lastTexture;
 
         EditorGUILayout.Space();
         
@@ -34,14 +40,14 @@ public class CameraControllerEditor : Editor {
 
         if (_isTesting)
         {
-            c.transform.rotation = Quaternion.Slerp(_originalQuat * Quaternion.Euler(0, c._minYaw, 0), _originalQuat * Quaternion.Euler(0, c._maxYaw, 0), yaw);
+            _camera.transform.rotation = Quaternion.Slerp(_originalQuat * Quaternion.Euler(0, _camera._minYaw, 0), _originalQuat * Quaternion.Euler(0, _camera._maxYaw, 0), yaw);
         }else if (!_isTesting && _wasTesting)
         {
-            c.transform.rotation = _originalQuat;
+            _camera.transform.rotation = _originalQuat;
         }
         else
         {
-            _originalQuat = c.transform.rotation;
+            _originalQuat = _camera.transform.rotation;
         }
         _wasTesting = _isTesting;
     }

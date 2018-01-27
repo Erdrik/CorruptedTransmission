@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class CommandsManager : MonoBehaviour {
 
-    public void MoveFunction(int i)
-    {
-        Debug.Log((Direction)i);
+    public Animator _animator;
 
+    public void OpenMoveMenu()
+    {
+        _animator.SetBool("MoveMenu", true);
+    }
+
+    public void CloseMoveMenu()
+    {
+        _animator.SetBool("MoveMenu", false);
     }
 	
 

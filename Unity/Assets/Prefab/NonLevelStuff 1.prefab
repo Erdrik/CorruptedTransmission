@@ -1335,7 +1335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1532642202381318
 GameObject:
   m_ObjectHideFlags: 1
@@ -2878,7 +2878,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1516540841964292}
   m_LocalRotation: {x: -0, y: -0.6964456, z: -0, w: 0.71760964}
-  m_LocalPosition: {x: 0.46900177, y: 1.273, z: -0.084999084}
+  m_LocalPosition: {x: 0.672, y: 1.273, z: -0.091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4082366559059456}
@@ -7385,8 +7385,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rootPoint: {fileID: 224282899159427364}
-  _roomSpacing: 20
-  _roomSize: 60
+  _roomSpacing: 40
+  _roomSize: 80
   _roomManager: {fileID: 0}
   _RoomUIPointPrefab: {fileID: 114697631305067686, guid: f160992da525190459e395432d3f0333,
     type: 2}

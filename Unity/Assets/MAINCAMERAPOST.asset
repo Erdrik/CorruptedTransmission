@@ -69,10 +69,10 @@ MonoBehaviour:
       screenEdgeMask:
         intensity: 0.03
   depthOfField:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       focusDistance: 10
-      aperture: 20.6
+      aperture: 13.4
       focalLength: 50
       useCameraFov: 0
       kernelSize: 1
@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Settings:
       bloom:
         intensity: 1.24
-        threshold: 1.1
+        threshold: 1.04
         softKnee: 0.547
         radius: 4
         antiFlicker: 0
@@ -293,12 +293,12 @@ MonoBehaviour:
       size: 1
       luminanceContribution: 0.8
   vignette:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       mode: 0
-      color: {r: 1, g: 0, b: 0, a: 1}
+      color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.299
+      intensity: 0.318
       smoothness: 0.641
       roundness: 1
       mask: {fileID: 0}
