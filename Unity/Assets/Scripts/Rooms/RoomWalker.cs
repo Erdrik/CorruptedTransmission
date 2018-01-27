@@ -18,7 +18,7 @@ public class RoomWalker : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        EnterRoom(_currentRoom);
+
 	}
 	
 	// Update is called once per frame
@@ -33,13 +33,28 @@ public class RoomWalker : MonoBehaviour {
         Gizmos.color = Color.magenta;
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Room")) {
+            _currentRoom = other.GetComponentInParent<Room>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Room")) {
+            _previousRoom = other.GetComponentInParent<Room>();
+        }
+    }
+
     public void Hide() {
         MoveTowards(_currentRoom.GetRandomHidingPoint());
     }
 
     public void EnterRoom(Room room) {
-        Vector3 destination = room.GetRandomStopPoint();
-        MoveTowards(destination);
+        if (room != null) {
+            _nextRoom = room;
+            Vector3 destination = room.GetRandomStopPoint();
+            MoveTowards(destination);
+        }
     }
 
     public void EnterPreviousRoom() {

@@ -32,6 +32,14 @@ public class RoomCameraManager : MonoBehaviour {
             GoToCamera(room._cameraPoints[0]);
         }
     }
+
+    public void ChangeRoom(int index) {
+        if (index >= 0 &&
+            index <= _rooms.Count) {
+            _currentRoom = index;
+            GoToRoom(CurrentRoom);
+        }
+    }
     
     public static void GoToCamera(CameraController camera)
     {

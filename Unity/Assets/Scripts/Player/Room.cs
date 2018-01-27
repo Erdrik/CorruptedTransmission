@@ -90,7 +90,13 @@ public class Room : MonoBehaviour {
     }
 
     public Room GetRandomNeighbourRoom() {
-        return _roomNeighbours[Random.Range(0, _roomNeighbours.Count - 1)]._room;
+        if (_roomNeighbours.Count > 0) {
+            return _roomNeighbours[Random.Range(0, _roomNeighbours.Count - 1)]._room;
+        }
+        else {
+            Debug.LogError("No neighbours for room[" + name + "]");
+            return null;
+        }
     }
 
     public Vector3 GetRandomPoint(List<Transform> xforms)

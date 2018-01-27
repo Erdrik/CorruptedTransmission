@@ -10,8 +10,8 @@ public class Professor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        _knownRooms = new Dictionary<string, Room>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,8 +23,9 @@ public class Professor : MonoBehaviour {
     }
 
     public void GoToRoom(Room room) {
+        Debug.Log("room[" + room._tag + "]");
         if (_knownRooms.ContainsKey(room._tag)) {
-            _roomWalker.EnterRoom(_knownRooms[name]);
+            _roomWalker.EnterRoom(_knownRooms[room._tag]);
         }
         else {
             Complain();
