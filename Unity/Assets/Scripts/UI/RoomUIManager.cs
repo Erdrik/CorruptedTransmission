@@ -36,31 +36,52 @@ public class RoomUIManager : MonoBehaviour {
     {
         if (!doneRooms.Contains(node))
         {
-            doneRooms.Add(node);
             List<Room.RoomDirection> neighbours = node._roomNeighbours;
-            RoomUIPoint point = BuildRoomUIPoint(position, node, 0);
+            RoomUIPoint point;
+            if (node._uiPoint)
+            {
+                point = node._uiPoint;
+            }
+            else
+            {
+                point = BuildRoomUIPoint(position, node, 0);
+                point.SetRoom(node);
+                node._uiPoint = point;
+            }
             foreach (Room.RoomDirection n in neighbours)
             {
+                doneRooms.Add(node);
                 switch (n._roomDirecion)
                 {
                     case Direction.Forward:
-                        point.Link(FindLastNode(n._room, position + new Vector2Int(0, 1*(n._padding+1)), doneRooms));
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(0, 1 * (n._yPadding + 1)), doneRooms));
                         break;
                     case Direction.Backward:
-                        point.Link(FindLastNode(n._room, position + new Vector2Int(0, -1 * (n._padding + 1)), doneRooms));
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(0, -1 * (n._yPadding + 1)), doneRooms));
                         break;
                     case Direction.Left:
-                        point.Link(FindLastNode(n._room, position + new Vector2Int(-1 * (n._padding + 1), 0), doneRooms));
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(-1 * (n._xPadding + 1), 0), doneRooms));
                         break;
                     case Direction.Right:
-                        point.Link(FindLastNode(n._room, position + new Vector2Int(1 * (n._padding + 1), 0), doneRooms));
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(1 * (n._xPadding + 1), 0), doneRooms));
+                        break;
+                    case Direction.ForwardLeft:
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(-1 * (n._xPadding + 1), 1 * (n._yPadding + 1)), doneRooms));
+                        break;
+                    case Direction.ForwardRight:
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(1 * (n._xPadding + 1), 1 * (n._yPadding + 1)), doneRooms));
+                        break;
+                    case Direction.BackwardLeft:
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(-1 * (n._xPadding + 1), -1 * (n._yPadding + 1)), doneRooms));
+                        break;
+                    case Direction.BackwardRight:
+                        point.Link(FindLastNode(n._room, position + new Vector2Int(1 * (n._xPadding + 1), -1 * (n._yPadding + 1)), doneRooms));
                         break;
                     default:
                         break;
                 }
 
             }
-            point.SetRoom(node);
             point.BuildLinks();
             return point;
         }

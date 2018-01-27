@@ -7,7 +7,11 @@ public enum Direction
     Forward,
     Backward,
     Left,
-    Right
+    Right,
+    ForwardLeft,
+    ForwardRight,
+    BackwardLeft,
+    BackwardRight
 }
 
 [System.Serializable]
@@ -18,8 +22,11 @@ public class Room : MonoBehaviour {
     {
         public Direction _roomDirecion;
         [Range(0,10)]
-        public int _padding;
+        public int _xPadding;
+        [Range(0, 10)]
+        public int _yPadding;
         public Room _room;
+        
     }
 
     public static Room _rootRoom;
@@ -28,6 +35,7 @@ public class Room : MonoBehaviour {
     public List<Transform> _stopPoints;
 
     public Transform _cameraPoints;
+    public RoomUIPoint _uiPoint;
     public List<RoomDirection> _roomNeighbours;
     public bool _isRoot;
 
