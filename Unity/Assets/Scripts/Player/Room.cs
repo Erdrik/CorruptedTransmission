@@ -72,7 +72,9 @@ public class Room : MonoBehaviour {
     {
         foreach (CameraController camera in _cameraPoints)
         {
-            camera.SetRoom(this);
+            if (camera != null) {
+                camera.SetRoom(this);
+            }
         }
     }
 
