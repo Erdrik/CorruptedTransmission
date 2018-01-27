@@ -43,6 +43,8 @@ public class Room : MonoBehaviour {
     public List<RoomDirection> _roomNeighbours;
     public bool _isRoot;
 
+    public string _tag;
+
     public void Awake()
     {
         if(_floor > _maxFloors-1)
@@ -85,6 +87,10 @@ public class Room : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public Room GetRandomNeighbourRoom() {
+        return _roomNeighbours[Random.Range(0, _roomNeighbours.Count - 1)]._room;
     }
 
     public Vector3 GetRandomPoint(List<Transform> xforms)

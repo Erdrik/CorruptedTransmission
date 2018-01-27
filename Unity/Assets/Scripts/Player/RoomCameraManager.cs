@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RoomCameraManager : MonoBehaviour {
 
-    public static RoomCameraManager _instance;
-
-    public Room _defaultRoom;
     public List<Room> _rooms;
     public Camera _mainCamera;
     public CameraUISelectionManager _cameraUIManager;
@@ -14,23 +11,14 @@ public class RoomCameraManager : MonoBehaviour {
     private static Camera _mainStaticCamera;
     private static Room _activeRoom;
 
-    private void Awake()
-    {
-        _instance = this;
-    }
-
     public void Start()
     {
         _mainStaticCamera = _mainCamera;
-        GoToRoom(_defaultRoom);
     }
 
     public static void GoToRoom(Room room)
     {
-        if(room._cameraPoints.Count > 0)
-        {
-            GoToCamera(room._cameraPoints[0]);
-        }
+        _mainStaticCamera.transform.SetParent(room._cameraPoints,false);
     }
     
     public static void GoToCamera(CameraController camera)
@@ -45,3 +33,24 @@ public class RoomCameraManager : MonoBehaviour {
     }
 
 }
+
+public class RoomCameraManager : MonoBehaviour {
+
+    public static RoomCameraManager _instance;
+
+    public Room _defaultRoom;
+    private void Awake()
+    {
+        _instance = this;
+    }
+
+    public void Start()
+    {
+        _mainStaticCamera = _mainCamera;
+        GoToRoom(_defaultRoom);
+    public static void GoToRoom(Room room)
+    {
+        if(room._cameraPoints.Count > 0)
+        {
+            GoToCamera(room._cameraPoints[0]);
+        }

@@ -8,7 +8,10 @@ public class RoomWalker : MonoBehaviour {
     public NavMeshAgent _agent;
 
     public Room _currentRoom;
-    public Vector3 _nextDestination;
+    public Room _previousRoom;
+    public Room _nextRoom;
+
+    public Vector3 _destinationPoint;
 
     public float _speed;
     public float _turnAngle;
@@ -20,7 +23,7 @@ public class RoomWalker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MoveTowards(_nextDestination);
+        MoveTowards(_destinationPoint);
 	}
 
     void OnDrawGizmos() {
@@ -39,8 +42,17 @@ public class RoomWalker : MonoBehaviour {
         MoveTowards(destination);
     }
 
+    public void EnterPreviousRoom() {
+        EnterRoom(_previousRoom);
+    }
+
     public void MoveTowards(Vector3 target) {
-        _nextDestination = target;
-        _agent.SetDestination(_nextDestination);
+        _destinationPoint = target;
+        _agent.SetDestination(_destinationPoint);
+    }
+
+    public void Stop() {
+        _destinationPoint = transform.position;
+        _agent.SetDestination(_destinationPoint);
     }
 }
