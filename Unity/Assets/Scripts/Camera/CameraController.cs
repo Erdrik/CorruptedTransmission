@@ -176,6 +176,15 @@ public class CameraController : MonoBehaviour {
         }
     }
 
-
+    private void OnDrawGizmos()
+    {
+        
+        Quaternion quat = Application.isPlaying ? _originalOrientation : transform.rotation;
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, quat * Quaternion.Euler(0, _minYaw, 0) * (Vector3.forward * 5));
+        Gizmos.DrawRay(transform.position, quat * Quaternion.Euler(0, _maxYaw, 0) * (Vector3.forward * 5));
+        Gizmos.DrawLine(transform.position + quat * Quaternion.Euler(0, _minYaw, 0) * (Vector3.forward * 5), transform.position + quat * Quaternion.Euler(0, _maxYaw, 0) * (Vector3.forward * 5));
+        //Gizmos.DrawLine(transform.position, transform.rotation * Quaternion.Euler(0, _maxYaw, 0) * (Vector3.forward*5));
+    }
 
 }

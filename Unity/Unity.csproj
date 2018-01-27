@@ -339,6 +339,7 @@
     <Compile Include="Assets\Scripts\UI\RoomUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIPoint.cs" />
     <Compile Include="Assets\Scripts\UI\SoundVisualiser.cs" />
+    <Compile Include="Assets\Scripts\UIColour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />

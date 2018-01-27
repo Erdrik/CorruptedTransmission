@@ -11,7 +11,9 @@ public enum Direction
     ForwardLeft,
     ForwardRight,
     BackwardLeft,
-    BackwardRight
+    BackwardRight,
+    Upwards,
+    Downwards
 }
 
 [System.Serializable]
@@ -29,11 +31,13 @@ public class Room : MonoBehaviour {
         
     }
 
-    public static Room _rootRoom;
+    public static Room[] _rootRooms = new Room[10];
+    public static int _maxFloors = 1;
 
     public List<Transform> _hidingPoints;
     public List<Transform> _stopPoints;
 
+    public int _floor = 0;
     public List<CameraController> _cameraPoints;
     public RoomUIPoint _uiPoint;
     public List<RoomDirection> _roomNeighbours;
@@ -41,9 +45,17 @@ public class Room : MonoBehaviour {
 
     public void Awake()
     {
-        if(_isRoot || _rootRoom == null)
+        if(_floor > _maxFloors-1)
         {
-            _rootRoom = this;
+            _maxFloors = _floor + 1;
+            if(_maxFloors > 10)
+            {
+                System.Array.Resize(ref _rootRooms, _maxFloors);
+            }
+        }
+        if(_isRoot)
+        {
+            _rootRooms[_floor] = this;
         }
         InitaliseCameras();
     }

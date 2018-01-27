@@ -11,19 +11,64 @@ public class RoomUIManager : MonoBehaviour {
 
     public RoomCameraManager _roomManager;
     public RoomUIPoint _RoomUIPointPrefab;
+    public Text _floorText;
+
+    private List<RoomUIPoint> _RoomUIPoints = new List<RoomUIPoint>();
+    private int _currentFloor = 0;
 
     public void Start()
     {
-        BuildCameraUI();
+        ShowFloor(0);
     }
 
-    public void BuildCameraUI()
+    public void GoUpFloor()
     {
-        Room room = Room._rootRoom;
-
-        if (room)
+        if(_currentFloor < Room._maxFloors - 1)
         {
-            FindLastNode(room);
+            _currentFloor++;
+            ShowFloor(_currentFloor);
+        }
+    }
+
+    public void GoDownFloor()
+    {
+        if (_currentFloor > 0)
+        {
+            _currentFloor--;
+            ShowFloor(_currentFloor);
+        }
+    }
+
+
+    public void ShowFloor(int floor)
+    {
+        if (floor > -1 && floor < Room._maxFloors)
+        {
+            _floorText.text = "FLOOR " + floor;
+            DeleteUI();
+            BuildCameraUI(floor);
+        }
+    }
+
+    void DeleteUI()
+    {
+        for (int i = 0; i < _RoomUIPoints.Count; i++)
+        {
+            Destroy(_RoomUIPoints[i].gameObject);
+        }
+        _RoomUIPoints.Clear();
+    }
+
+    public void BuildCameraUI(int floor)
+    {
+        if (floor > -1 && floor < Room._maxFloors)
+        {
+            Room room = Room._rootRooms[floor];
+
+            if (room)
+            {
+                FindLastNode(room);
+            }
         }
     }
     private void FindLastNode(Room node)
@@ -82,6 +127,7 @@ public class RoomUIManager : MonoBehaviour {
 
             }
             point.BuildLinks();
+            _RoomUIPoints.Add(point);
             return point;
         }
         return null;
