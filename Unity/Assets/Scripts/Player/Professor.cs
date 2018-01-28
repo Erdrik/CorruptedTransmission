@@ -10,6 +10,8 @@ public class Professor : MonoBehaviour {
         goBack,
         hide,
         stop,
+        activate,
+        lockDoor,
         actionLimit
     }
 
@@ -22,6 +24,7 @@ public class Professor : MonoBehaviour {
     private Dictionary<string, Room> _knownRooms;
 
     public RoomWalker _roomWalker;
+    public RoomWalker _nemesis;
 
     public ActionState _actionState;
     public ProfessorAction _currentActionType;
@@ -45,7 +48,11 @@ public class Professor : MonoBehaviour {
     [Range(0.0f, 1.0f)]
     public float _major;
 
-    float _patience;
+    public float _waitingUntil;
+    public float _minWait;
+    public float _maxWait;
+    public float _varianceWait;
+
     public Room _mentionedRoom;
     public Room _targetRoom;
 
@@ -66,8 +73,17 @@ public class Professor : MonoBehaviour {
                 case ProfessorAction.move:
                     Move();
                     break;
+                case ProfessorAction.getOut:
+                    GetOut();
+                    break;
+                case ProfessorAction.goBack:
+                    GoBack();
+                    break;
                 case ProfessorAction.stop:
                     Stop();
+                    break;
+                case ProfessorAction.hide:
+                    Hide();
                     break;
                 case ProfessorAction.actionLimit:
                 default:
@@ -105,31 +121,62 @@ public class Professor : MonoBehaviour {
         _fear = Mathf.Clamp01(_fear + fear);
     }
 
+    private float GetPatienceLength() {
+        return Random.Range(_minWait, _maxWait) - (_distrust + (_anger * 4.0f) + (_fear * 2.0f));
+    }
+
+    private void ChangeAction(ProfessorAction action) {
+        _actionState = ActionState.start;
+        _currentActionType = action;
+    }
+
     private void CompleteAction() {
         _actionState = ActionState.complete;
+        _currentActionType = ProfessorAction.stop;
+        Wait();
+
     }
 
     public void TeachRoom(string tag, Room room) {
         _knownRooms.Add(tag, room);
     }
 
+    private bool NemesisIsInRoom() {
+        return (_nemesis._currentRoom._tag == _roomWalker._currentRoom._tag);
+    }
+
+    private void Wait() {
+        _waitingUntil = Time.time + GetPatienceLength();
+    }
+
     private void Move() {
         switch (_actionState) {
             case ActionState.start:
                 if (_mentionedRoom != null) {
-                    _mentionedRoom = null;
-                    _targetRoom = _mentionedRoom;
-                    _roomWalker.EnterRoom(_knownRooms[_mentionedRoom._tag]);
+                    if (_mentionedRoom._tag == _roomWalker._currentRoom._tag) {
+                        AdjustEmotion(_minor, _minor, -_minor);
+                        _mentionedRoom = null;
+                        _roomWalker.Wander();
+                        _actionState = ActionState.during;
+                    }
+                    else {
+                        _targetRoom = _mentionedRoom;
+                        _mentionedRoom = null;
+                        _roomWalker.EnterRoom(_knownRooms[_targetRoom._tag]);
+                        _actionState = ActionState.during;
+                    }
                 }
                 else {
                     float currentTime = Time.time;
-                    if (currentTime > _patience) {
+                    if (currentTime > _waitingUntil) {
                         switch (_greatestEmotion) {
                             case Emotion.distrust:
                                 Complain("Where?");
+                                Wait();
                                 break;
                             case Emotion.anger:
                                 Complain("Where?");
+                                Wait();
                                 break;
                             case Emotion.fear:
                                 GetOut();
@@ -137,7 +184,6 @@ public class Professor : MonoBehaviour {
                             default:
                                 Debug.LogError("Invalid emotion![" + GreatestEmotion + "]");
                                 break;
-
                         }
                     }
                 }
@@ -153,7 +199,8 @@ public class Professor : MonoBehaviour {
     public void GetOut() {
         switch (_actionState) {
             case ActionState.start:
-                _roomWalker.EnterRoom(_roomWalker._currentRoom.GetRandomNeighbourRoom());
+                _targetRoom = _roomWalker._currentRoom.GetRandomNeighbourRoom();
+                _roomWalker.EnterRoom(_targetRoom);
                 _actionState = ActionState.during;
                 break;
             case ActionState.during:
@@ -198,8 +245,12 @@ public class Professor : MonoBehaviour {
                 break;
             case ActionState.during:
                 if (_roomWalker.AtDestination()) {
-                    AdjustEmotion(-_minor, 0.0f, -_minor);
-                    CompleteAction();
+                    if (NemesisIsInRoom()) {
+                        AdjustEmotion(-_minor, 0.0f, _moderate);
+                    }
+                    else {
+                        AdjustEmotion(0.0f, 0.0f, _minor);
+                    }
                 }
                 break;
         }
@@ -248,12 +299,18 @@ public class Professor : MonoBehaviour {
                     break;
             }
         }
+        else {
+            ChangeAction(ProfessorAction.move);
+            Wait();
+        }
     }
 
     public void InstructRoom(Room room) {
         if (_currentActionType == ProfessorAction.move) {
-            if (_targetRoom._tag == room._tag) {
-                RepeatedInstruction();
+            if (_targetRoom != null && 
+                _targetRoom._tag == room._tag) {
+                AdjustEmotion(0.0f, _minor, -_minor);
+                Complain("Going there already!");
             }
             else if (_knownRooms.ContainsKey(room._tag)) {
                 _mentionedRoom = room;
@@ -268,23 +325,36 @@ public class Professor : MonoBehaviour {
     }
 
     public void InstructGetOut() {
-        _currentActionType = ProfessorAction.move;
+        ChangeAction(ProfessorAction.getOut);
     }
 
     public void InstructGoBack() {
-
+        if (_roomWalker._previousRoom == null) {
+            Complain("Where?");
+        }
+        ChangeAction(ProfessorAction.goBack);
     }
 
     public void InstructStop() {
-
+        if (_currentActionType == ProfessorAction.stop) {
+            Wait();
+            Complain("I am staying still!");
+        }
+        else {
+            ChangeAction(ProfessorAction.stop);
+        }
     }
 
     public void InstructHide() {
-
+        ChangeAction(ProfessorAction.hide);
     }
 
     public void InstructActivate() {
 
+    }
+
+    public void InstructLock() {
+        ChangeAction(ProfessorAction.lockDoor);
     }
 
     public void TouchWithDeath() {

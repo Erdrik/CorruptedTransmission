@@ -148,7 +148,7 @@ public class Nemesis : MonoBehaviour {
 
     private void CompleteSpooky() {
         _actionState = ActionState.complete;
-        _currentActionType = (NemesisAction)Random.Range(0, (int)NemesisAction.actionLimit);
+        _currentActionType = (NemesisAction)Random.Range((int)NemesisAction.explore, (int)NemesisAction.actionLimit);
     }
 
     private void BeginChase(Transform xform) {
