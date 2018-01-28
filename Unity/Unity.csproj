@@ -339,6 +339,9 @@
     <Compile Include="Assets\Scripts\Player\Room.cs" />
     <Compile Include="Assets\Scripts\Player\RoomCameraManager.cs" />
     <Compile Include="Assets\Scripts\Rooms\Door.cs" />
+    <Compile Include="Assets\Scripts\Rooms\ExitButton.cs" />
+    <Compile Include="Assets\Scripts\Rooms\ExitDoor.cs" />
+    <Compile Include="Assets\Scripts\Rooms\ExitLight.cs" />
     <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
     <Compile Include="Assets\Scripts\UI\CameraFeed.cs" />
     <Compile Include="Assets\Scripts\UI\CameraUISelectionManager.cs" />

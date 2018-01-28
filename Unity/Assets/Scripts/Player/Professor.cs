@@ -56,6 +56,9 @@ public class Professor : MonoBehaviour {
     public Room _mentionedRoom;
     public Room _targetRoom;
 
+    public Transform _reach;
+    public ExitButton _button;
+
     // Use this for initialization
     void Start() {
         //_knownRooms = new Dictionary<string, Room>();
@@ -86,6 +89,9 @@ public class Professor : MonoBehaviour {
                     break;
                 case ProfessorAction.hide:
                     Hide();
+                    break;
+                case ProfessorAction.activate:
+                    Activate();
                     break;
                 case ProfessorAction.actionLimit:
                 default:
@@ -258,17 +264,43 @@ public class Professor : MonoBehaviour {
         }
     }
 
-    public void PushButton() {
-        //_pushButton = _roomWalker._currentRoom.GetPushButton();
-        //if (_pushButton == null) {
-        //    Complain();
-        //}
-        //else if (Vector3.Distance(transform.position, _pushButton.transform.position) > _touchDistance) {
+    public void Activate() {
+        switch (_actionState) {
+            case ActionState.start:
+                if (_button == null) {
+                    _button = _roomWalker._currentRoom.GetExitButton();
+                    if (_button == null) {
+                        Complain("What button?");
+                        AdjustEmotion(_minor, _minor, _minor);
+                        CompleteAction();
+                    }
+                    else {
+                        if (_button.Activated) {
+                            Complain("I already pushed that one!");
+                            AdjustEmotion(_moderate, _moderate, _minor);
+                            CompleteAction();
+                        }
+                        else {
+                            _roomWalker.MoveTowards(_button.transform.position);
+                            _actionState = ActionState.during;
+                        }
+                    }
+                }
+                break;
+            case ActionState.during:
+                if (_button.Activated) {
+                    AdjustEmotion(-_major, -_major, -_major);
+                    _button = null;
+                    CompleteAction();
+                }
+                else if (_roomWalker.AtDestination()) {
+                    Debug.LogError("The professor did not push button when reached it!");
+                    _button = null;
+                    CompleteAction();
+                }
+                break;
+        }
 
-        //}
-        //else {
-        //    _roomWalker.MoveTowards(_pushButton.ActivatePoint);
-        //}
     }
 
     public void RepeatedInstruction() {
@@ -348,11 +380,17 @@ public class Professor : MonoBehaviour {
     }
 
     public void InstructHide() {
-        ChangeAction(ProfessorAction.hide);
+        if (_currentActionType == ProfessorAction.hide) {
+            Wait();
+            AdjustEmotion(_minor, 0.0f, _minor);
+        }
+        else {
+            ChangeAction(ProfessorAction.hide);
+        }
     }
 
     public void InstructActivate() {
-
+        ChangeAction(ProfessorAction.activate);
     }
 
     public void InstructLock() {

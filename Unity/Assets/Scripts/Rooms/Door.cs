@@ -15,6 +15,9 @@ public class Door : MonoBehaviour {
     public float _timeTaken;
     public float _startTime;
 
+    public Room _frontRoom;
+    public Room _backRoom;
+
     public bool _locking;
 
     [SerializeField]
