@@ -36,6 +36,11 @@ public class MakeNiceProtocol : MonoBehaviour {
         _professor.InstructRoom(_roomCameraManager.GetRoom(index));
     }
 
+    public void InstructRoom(Room room)
+    {
+        _professor.InstructRoom(room);
+    }
+
     public void InstructGetOut() {
         _professor.InstructGetOut();
     }
@@ -54,6 +59,11 @@ public class MakeNiceProtocol : MonoBehaviour {
 
     public void InstructPushButton() {
         _professor.InstructActivate();
+    }
+
+    public void InstructLock()
+    {
+        throw new System.NotImplementedException();
     }
 
 }

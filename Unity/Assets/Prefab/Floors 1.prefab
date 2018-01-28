@@ -13905,7 +13905,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultRoom: {fileID: 114693388952926338}
-  _rooms: []
+  _rooms:
+  - {fileID: 114693388952926338}
+  - {fileID: 114585620675567272}
+  - {fileID: 114976511111095716}
+  - {fileID: 114830363461645980}
+  - {fileID: 114833183699848836}
+  - {fileID: 114782354642406668}
+  - {fileID: 114884617074940922}
   _mainCamera: {fileID: 0}
   _cameraUIManager: {fileID: 0}
 --- !u!114 &114514244668402378
@@ -14003,7 +14010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
@@ -14168,8 +14174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints:
-  - {fileID: 0}
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
@@ -14297,7 +14301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
@@ -14352,7 +14355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
@@ -14399,11 +14401,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
-  _cameraPoints: []
+  _cameraPoints:
+  - {fileID: 114664793586647978}
+  - {fileID: 114747689943816424}
+  - {fileID: 114545161073261674}
   _uiPoint: {fileID: 0}
   _roomNeighbours:
   - _roomDirecion: 1
@@ -14499,7 +14503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
@@ -14593,7 +14596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ae776f048d2f45b8081c62bce770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _searchPoints: []
   _hidingPoints: []
   _stopPoints: []
   _floor: 0
