@@ -54,7 +54,11 @@ public class MakeNiceProtocolEditor : Editor {
         }
 
         if (GUILayout.Button(new GUIContent("Push Button"))) {
-            makeNice.InstructPushButton();
+            makeNice.InstructActivate();
+        }
+
+        if (GUILayout.Button(new GUIContent("Door"))) {
+            makeNice.InstructDoor();
         }
 
         serializedObject.ApplyModifiedProperties();

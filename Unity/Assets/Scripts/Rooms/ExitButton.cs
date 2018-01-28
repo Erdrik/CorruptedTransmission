@@ -29,6 +29,13 @@ public class ExitButton : MonoBehaviour {
             !_exit.IsActivated(_id)) {
             _exit.Activate(_id);
             ChangeMaterial();
+            Professor professor = other.GetComponentInParent<Professor>();
+            if (professor != null) {
+                professor.DropReach();
+            }
+            else {
+                Debug.LogError("Professor collided with button but did not have Professor component in parent!");
+            }
         }
     }
 

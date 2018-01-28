@@ -117,7 +117,6 @@ public class RoomCameraManager : MonoBehaviour {
     public static void RegisterProfessor(Professor p)
     {
         _professor = p;
-        _professor._roomWalker._currentRoom = _instance._defaultRoom;
         CheckIfSpawned();
     }
 

@@ -15,10 +15,10 @@ public class Door : MonoBehaviour {
     public float _timeTaken;
     public float _startTime;
 
-    public Room _frontRoom;
-    public Room _backRoom;
-
     public bool _locking;
+
+    public Transform _pointA;
+    public Transform _pointB;
 
     [SerializeField]
     [HideInInspector]
@@ -56,6 +56,19 @@ public class Door : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Professor")) {
+            _locking = !_locking;
+            Professor professor = other.GetComponentInParent<Professor>();
+            if (professor != null) {
+                professor.DropReach();
+            }
+            else {
+                Debug.LogError("Professor collided with door but did not have Professor component in parent!");
+            }
+        }
+    }
+
     public void Lock() {
         _locking = true;
         
@@ -64,5 +77,22 @@ public class Door : MonoBehaviour {
     public void Unlock() {
         _locking = false;
         
+    }
+
+    public bool Locked {
+        get {
+            return _locked;
+        }
+    }
+
+    public Transform GetNearestDoorPoint(Transform target) {
+        float pointADistance = Vector3.Distance(target.position, _pointA.position);
+        float pointBDistance = Vector3.Distance(target.position, _pointA.position);
+        if (pointADistance >= pointBDistance) {
+            return _pointA;
+        }
+        else {
+            return _pointB;
+        }
     }
 }

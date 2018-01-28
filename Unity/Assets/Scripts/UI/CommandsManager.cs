@@ -69,12 +69,12 @@ public class CommandsManager : MonoBehaviour {
 
     public void Activate()
     {
-        _protocol.InstructPushButton();
+        _protocol.InstructActivate();
     }
 
-    public void Lock()
+    public void Door()
     {
-        _protocol.InstructLock();
+        _protocol.InstructDoor();
     }
 
     public void GoBack()

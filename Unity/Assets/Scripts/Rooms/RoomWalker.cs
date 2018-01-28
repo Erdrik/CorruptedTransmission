@@ -75,7 +75,7 @@ public class RoomWalker : MonoBehaviour {
     }
 
     public void Hide() {
-        Transform point = _currentRoom.GetRandomHidingPoint();
+        Transform point = _currentRoom.GetNearestHidingPoint(transform);
         if (point != null) {
             MoveTowards(point.position);
         }
