@@ -182,7 +182,7 @@ public class Professor : MonoBehaviour {
     }
 
     private bool NemesisIsInRoom() {
-        if (_nemesis != null &&
+        if (_nemesis != null && 
             _nemesis._currentRoom != null) {
             return (_nemesis._currentRoom._tag == _roomWalker._currentRoom._tag);
         }
