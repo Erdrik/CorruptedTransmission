@@ -54,6 +54,7 @@ public class Room : MonoBehaviour {
     public bool _isRoot;
 
     public ExitButton _exitButton;
+    public List<Door> _doors;
 
     public string _tag;
 
@@ -81,12 +82,16 @@ public class Room : MonoBehaviour {
 
     public void ProfessorEntered()
     {
-        _uiPoint.ChangeColour(_uiPoint._professorColour);
+        if (_uiPoint != null) {
+            _uiPoint.ChangeColour(_uiPoint._professorColour);
+        }
     }
 
     public void ProfessorExited()
     {
-        _uiPoint.ChangeColour(_uiPoint._normalColour);
+        if (_uiPoint != null) {
+            _uiPoint.ChangeColour(_uiPoint._normalColour);
+        }
     }
 
     private void InitaliseCameras()
@@ -163,8 +168,36 @@ public class Room : MonoBehaviour {
         return GetRandomPoint(_hidingPoints);
     }
 
+    public Transform GetNearestHidingPoint(Transform target) {
+        Transform nearestHidingPoint = null;
+        float nearest = float.MaxValue;
+        foreach (Transform hidingPoint in _hidingPoints) {
+            float distance = Vector3.Distance(target.position, hidingPoint.position);
+            if (distance < nearest) {
+                nearest = distance;
+                nearestHidingPoint = hidingPoint;
+            }
+        }
+
+        return nearestHidingPoint;
+    }
+
     public ExitButton GetExitButton() {
         return _exitButton;
+    }
+
+    public Door GetNearestDoor(Vector3 point) {
+        Door nearest = null;
+        float nearestDistance = float.MaxValue;
+        foreach (Door door in _doors) {
+            float distance = Vector3.Distance(point, door.transform.position);
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearest = door;
+            }
+        }
+
+        return nearest;
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Professor : MonoBehaviour, ISpawnable {
+public class Professor : MonoBehaviour {
 
     public enum ProfessorAction {
         move,
@@ -11,7 +11,7 @@ public class Professor : MonoBehaviour, ISpawnable {
         hide,
         stop,
         activate,
-        lockDoor,
+        door,
         actionLimit
     }
 
@@ -31,6 +31,7 @@ public class Professor : MonoBehaviour, ISpawnable {
 
     public ProfessorAction _previousActionType;
     public float _lastInstruction;
+    public bool _currentActionIsOwnIdea;
 
     [Range(0.0f, 1.0f)]
     public float _distrust;
@@ -57,7 +58,10 @@ public class Professor : MonoBehaviour, ISpawnable {
     public Room _targetRoom;
 
     public Transform _reach;
+    public float _startReaching;
     public ExitButton _button;
+    public Door _door;
+    public bool _doorLock;
 
     // Use this for initialization
     void Start() {
@@ -71,15 +75,18 @@ public class Professor : MonoBehaviour, ISpawnable {
 
     // Update is called once per frame
     void Update() {
-        if (!_nemesis)
-        {
-            if (RoomCameraManager._nemisis)
-            {
+        if (!_nemesis) {
+            if (RoomCameraManager._nemisis) {
                 _nemesis = RoomCameraManager._nemisis.GetComponent<RoomWalker>();
             }
         }
-        _roomWalker._previousRoom._uiPoint.ChangeColour(_roomWalker._previousRoom._uiPoint._professorColour);
-        _roomWalker._currentRoom._uiPoint.ChangeColour(_roomWalker._currentRoom._uiPoint._professorColour);
+        if (_roomWalker._previousRoom != null) {
+            _roomWalker._previousRoom.ProfessorEntered();
+        }
+        if (_roomWalker._currentRoom != null) {
+            _roomWalker._currentRoom.ProfessorExited();
+        }
+
         Think();
         if (_actionState == ActionState.complete) {
             Impatient();
@@ -104,6 +111,9 @@ public class Professor : MonoBehaviour, ISpawnable {
                 case ProfessorAction.activate:
                     Activate();
                     break;
+                case ProfessorAction.door:
+                    Door();
+                    break;
                 case ProfessorAction.actionLimit:
                 default:
                     Debug.LogError("Invalid ProfessorAction![" + _currentActionType + "]");
@@ -122,10 +132,19 @@ public class Professor : MonoBehaviour, ISpawnable {
         else if (_fear > _distrust && _fear > _distrust) {
             _greatestEmotion = Emotion.fear;
         }
+
+        if (_reach.gameObject.activeSelf &&
+            !(_currentActionType == ProfessorAction.door ||
+            _currentActionType == ProfessorAction.activate)) {
+            DropReach();
+        }
     }
 
     private void Impatient() {
-
+        float currentTime = Time.time;
+        if (currentTime > _waitingUntil) {
+            ChangeAction((ProfessorAction)Random.Range((int)ProfessorAction.getOut, (int)ProfessorAction.actionLimit), false);
+        }
     }
 
     private Emotion GreatestEmotion {
@@ -144,13 +163,14 @@ public class Professor : MonoBehaviour, ISpawnable {
         return Random.Range(_minWait, _maxWait) - (_distrust + (_anger * 4.0f) + (_fear * 2.0f));
     }
 
-    private void ChangeAction(ProfessorAction action) {
+    private void ChangeAction(ProfessorAction action, bool instruction) {
         _actionState = ActionState.start;
         _currentActionType = action;
+        _currentActionIsOwnIdea = !instruction;
     }
 
     private void CompleteAction() {
-        
+
         _actionState = ActionState.complete;
         _currentActionType = ProfessorAction.stop;
         Wait();
@@ -162,7 +182,13 @@ public class Professor : MonoBehaviour, ISpawnable {
     }
 
     private bool NemesisIsInRoom() {
-        return (_nemesis._currentRoom._tag == _roomWalker._currentRoom._tag);
+        if (_nemesis != null &&
+            _nemesis._currentRoom != null) {
+            return (_nemesis._currentRoom._tag == _roomWalker._currentRoom._tag);
+        }
+        else {
+            return false;
+        }
     }
 
     private void Wait() {
@@ -210,7 +236,7 @@ public class Professor : MonoBehaviour, ISpawnable {
                 break;
             case ActionState.during:
                 if (_roomWalker.AtDestination()) {
-                    
+
                     CompleteAction();
                 }
                 break;
@@ -250,6 +276,7 @@ public class Professor : MonoBehaviour, ISpawnable {
         switch (_actionState) {
             case ActionState.start:
                 _roomWalker.Stop();
+                Wait();
                 _actionState = ActionState.complete;
                 break;
             case ActionState.during:
@@ -311,9 +338,46 @@ public class Professor : MonoBehaviour, ISpawnable {
                     _button = null;
                     CompleteAction();
                 }
+                else if (_reach.gameObject.activeSelf == false &&
+                        _roomWalker._agent.remainingDistance < _startReaching) {
+                    StartReach();
+                }
                 break;
         }
+    }
 
+    public void Door() {
+        switch (_actionState) {
+            case ActionState.start:
+                _door = _roomWalker._currentRoom.GetNearestDoor(transform.position);
+                if (_door != null) {
+                    _doorLock = !_door.Locked;
+                    _roomWalker.MoveTowards(_door.GetNearestDoorPoint(transform).position);
+                    _actionState = ActionState.during;
+                }
+                else {
+                    CompleteAction();
+                }
+                break;
+            case ActionState.during:
+                if (_door.Locked == _doorLock) {
+                    AdjustEmotion(-_minor, -_minor, -_minor);
+                    _door = null;
+                    CompleteAction();
+                }
+                else if (_roomWalker.AtDestination()) {
+                    Debug.LogError("The professor did not lock door when reached it!");
+                    _button = null;
+                    CompleteAction();
+                }
+                else {
+                    if (_reach.gameObject.activeSelf == false &&
+                        _roomWalker._agent.remainingDistance < _startReaching) {
+                        StartReach();
+                    }
+                }
+                break;
+        }
     }
 
     public void RepeatedInstruction() {
@@ -347,14 +411,15 @@ public class Professor : MonoBehaviour, ISpawnable {
             }
         }
         else {
-            ChangeAction(ProfessorAction.move);
+            _targetRoom = null;
+            ChangeAction(ProfessorAction.move, true);
             Wait();
         }
     }
 
     public void InstructRoom(Room room) {
         if (_currentActionType == ProfessorAction.move) {
-            if (_targetRoom != null && 
+            if (_targetRoom != null &&
                 _targetRoom._tag == room._tag) {
                 AdjustEmotion(0.0f, _minor, -_minor);
                 Complain("Going there already!");
@@ -372,14 +437,14 @@ public class Professor : MonoBehaviour, ISpawnable {
     }
 
     public void InstructGetOut() {
-        ChangeAction(ProfessorAction.getOut);
+        ChangeAction(ProfessorAction.getOut, true);
     }
 
     public void InstructGoBack() {
         if (_roomWalker._previousRoom == null) {
             Complain("Where?");
         }
-        ChangeAction(ProfessorAction.goBack);
+        ChangeAction(ProfessorAction.goBack, true);
     }
 
     public void InstructStop() {
@@ -388,26 +453,21 @@ public class Professor : MonoBehaviour, ISpawnable {
             Complain("I am staying still!");
         }
         else {
-            ChangeAction(ProfessorAction.stop);
+            ChangeAction(ProfessorAction.stop, true);
         }
     }
 
     public void InstructHide() {
-        if (_currentActionType == ProfessorAction.hide) {
-            Wait();
-            AdjustEmotion(_minor, 0.0f, _minor);
-        }
-        else {
-            ChangeAction(ProfessorAction.hide);
-        }
+        ChangeAction(ProfessorAction.hide, true);
+        AdjustEmotion(_minor, 0.0f, _minor);
     }
 
     public void InstructActivate() {
-        ChangeAction(ProfessorAction.activate);
+        ChangeAction(ProfessorAction.activate, true);
     }
 
-    public void InstructLock() {
-        ChangeAction(ProfessorAction.lockDoor);
+    public void InstructDoor() {
+        ChangeAction(ProfessorAction.door, true);
     }
 
     public void TouchWithDeath() {
@@ -417,11 +477,18 @@ public class Professor : MonoBehaviour, ISpawnable {
     }
 
     private void Complain(string complaint) {
-        Debug.Log("The professor complains[" + complaint + "]");
+        if (_currentActionIsOwnIdea) {
+            AdjustEmotion(-_minor, 0.0f, 0.0f);
+        }
+        else {
+            Debug.Log("The professor complains[" + complaint + "]");
+        }
+    }
+    private void StartReach() {
+        _reach.gameObject.SetActive(true);
     }
 
-    public void OnSpawn(Room room)
-    {
-        
+    public void DropReach() {
+        _reach.gameObject.SetActive(false);
     }
 }

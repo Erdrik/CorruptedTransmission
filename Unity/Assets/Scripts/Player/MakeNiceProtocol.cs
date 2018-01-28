@@ -53,13 +53,13 @@ public class MakeNiceProtocol : MonoBehaviour {
         _professor.InstructHide();
     }
 
-    public void InstructPushButton() {
+    public void InstructActivate() {
         _professor.InstructActivate();
     }
 
-    public void InstructLock()
+    public void InstructDoor()
     {
-        throw new System.NotImplementedException();
+        _professor.InstructDoor();
     }
 
 }
