@@ -15,26 +15,55 @@ public class MusicManager : MonoBehaviour {
 
     public float _monsterPitchDistance = 40f;
 
+    private float _corruption = 0;
+    private int _corruptSources = 0;
+
     public void Update()
     {
         SetCutoff(_cutoffModifer);
-        CheckMonsterRadius();
+        AddToCourruption(CheckMonsterRadius());
+        AddToCourruption(GuageEmotions());
+        PitchCorruption();
     }
 
-    private void CheckMonsterRadius()
+    private void PitchCorruption()
+    {
+        _corruption = Mathf.Clamp01(_corruption / _corruptSources);
+        SetPitch(1f - (0.5f * _corruption));
+        _corruption = 0;
+        _corruptSources = 0;
+    }
+
+    private void AddToCourruption(float c)
+    {
+        _corruption += c;
+        _corruptSources++;
+    }
+
+    private float GuageEmotions()
     {
         if (RoomCameraManager._professor)
         {
-            float dist = Vector3.Distance(RoomCameraManager._professor.transform.position, RoomCameraManager._professor._nemesis.transform.position);
+            float emotionalProblemScore = 0;
+            emotionalProblemScore += RoomCameraManager._professor._anger;
+            emotionalProblemScore += RoomCameraManager._professor._distrust;
+            emotionalProblemScore += RoomCameraManager._professor._fear;
+            return emotionalProblemScore / 3;
+        }
+        return 0;
+    }
+
+    private float CheckMonsterRadius()
+    {
+        if (RoomCameraManager._professor && RoomCameraManager._nemisis)
+        {
+            float dist = Vector3.Distance(RoomCameraManager._professor.transform.position, RoomCameraManager._nemisis.transform.position);
             if(dist < _monsterPitchDistance)
             {
-                SetPitch((dist / (_monsterPitchDistance * 2)) + 0.5f);
-            }
-            else
-            {
-                SetPitch(1);
+                return  1-(dist / _monsterPitchDistance);
             }
         }
+        return 0;
     }
 
     public void SetPitch(float newPitch)

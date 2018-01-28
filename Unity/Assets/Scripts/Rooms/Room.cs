@@ -32,11 +32,20 @@ public class Room : MonoBehaviour {
         
     }
 
+    [System.Serializable]
+    public struct SpawnRequest
+    {
+        public GameObject _spawnItem;
+        public Transform _spawn;
+    }
+
     public static Room[] _rootRooms = new Room[10];
     public static int _maxFloors = 1;
 
     public List<Transform> _hidingPoints;
     public List<Transform> _stopPoints;
+
+    public List<SpawnRequest> _spawnRequests;
 
     public int _floor = 0;
     public List<CameraController> _cameraPoints;
@@ -65,7 +74,17 @@ public class Room : MonoBehaviour {
 
     public void Start()
     {
-        
+
+    }
+
+    public void ProfessorEntered()
+    {
+
+    }
+
+    public void ProfessorExited()
+    {
+
     }
 
     private void InitaliseCameras()
@@ -114,6 +133,11 @@ public class Room : MonoBehaviour {
             Debug.LogError("No neighbours for room[" + name + "]");
             return null;
         }
+    }
+
+    public CameraController GetRandomCamera()
+    {
+        return _cameraPoints[(int)Random.Range(0, _cameraPoints.Count - 1)];
     }
 
     public Transform GetRandomPoint(List<Transform> xforms)

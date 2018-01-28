@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class RoomUIPoint : MonoBehaviour {
 
     public LineRenderer _lineRender;
+    public Image _backgroundImage;
+    public Color _normalColour;
+    public Color _professorColour;
     private List<Vector3> _points = new List<Vector3>();
     private Room _room;
 
@@ -32,6 +35,11 @@ public class RoomUIPoint : MonoBehaviour {
             _points.Add(c.GetComponent<RectTransform>().anchoredPosition3D - GetComponent<RectTransform>().anchoredPosition3D+ new Vector3(0,0, bufferB));
             
         }
+    }
+
+    public void ChangeColour(Color c)
+    {
+        _backgroundImage.color = c;
     }
 
     public void BuildLinks()

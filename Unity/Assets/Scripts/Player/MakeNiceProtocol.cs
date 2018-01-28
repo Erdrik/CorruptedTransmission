@@ -15,17 +15,13 @@ public class MakeNiceProtocol : MonoBehaviour {
     [SerializeField]
     private int _selectedRoom;
     public const string PROPERTY_SELECTED_ROOM = "_selectedRoom";
-
-	// Use this for initialization
-	void Start () {
-        foreach (Room room in _roomCameraManager._rooms) {
-            _professor.TeachRoom(room._tag, room);
-        }
-	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (!_professor && RoomCameraManager._professor)
+        {
+            _professor = RoomCameraManager._professor;
+        }
 	}
 
     public void InstructMove() {

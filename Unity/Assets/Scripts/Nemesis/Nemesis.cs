@@ -50,10 +50,18 @@ public class Nemesis : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _actionState = ActionState.complete;
+        RoomCameraManager.RegisterNemisis(this);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (!_victim)
+        {
+            if (RoomCameraManager._professor)
+            {
+                _victim = RoomCameraManager._professor.GetComponent<RoomWalker>();
+            }
+        }
         Watch();
         if (_actionState == ActionState.complete) {
             float currentTime = Time.time;
@@ -100,14 +108,20 @@ public class Nemesis : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        
         if (other.CompareTag("Professor")) {
+            _watching = other.transform;
+        }else if (other.CompareTag("Camera") && (_currentActionType == NemesisAction.explore || _currentActionType == NemesisAction.spooky) && _watching == null)
+        {
             _watching = other.transform;
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("Professor")) {
+        if (_watching == other.transform)
+        {
             _watching = null;
+            FaceTowards(transform.forward);
         }
     }
     
@@ -116,6 +130,7 @@ public class Nemesis : MonoBehaviour {
             int layerMaskFunc = 1 << LayerMask.NameToLayer("Nemesis");
             if (_chaseTarget == null) {
                 if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, Mathf.Infinity, ~layerMaskFunc)) {
+                    Debug.Log(_watchingRay.collider.name);
                     if (_watchingRay.collider.CompareTag("Professor")) {
                         BeginChase(_watchingRay.transform);
                     }
@@ -137,7 +152,13 @@ public class Nemesis : MonoBehaviour {
     private Vector3 TowardsWatch() {
         Vector3 towards = _watching.transform.position - _head.transform.position;
         towards.Normalize();
+        FaceTowards(towards);
         return towards;
+    }
+
+    private void FaceTowards(Vector3 dir)
+    {
+        _head.forward = dir;
     }
 
     private void CompleteAction() {
@@ -239,7 +260,10 @@ public class Nemesis : MonoBehaviour {
                 Wait();
                 CompleteSpooky();
                 break;
-            case NemesisSpooky.stare:
+           case NemesisSpooky.stare:
+                /*CameraController c = _roomWalker._currentRoom.GetRandomCamera();
+                Vector3 cameraDirect = c.transform.position - _head.transform.position;
+                FaceTowards(cameraDirect);*/
                 Wait();
                 CompleteSpooky();
                 break;
@@ -253,6 +277,8 @@ public class Nemesis : MonoBehaviour {
         //}
         return spooky;
     }
+
+
 
 private void Wait() {
         _nextActionTime = Time.time + Random.Range(_minWait, _maxWait);

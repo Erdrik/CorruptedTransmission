@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Professor : MonoBehaviour {
+public class Professor : MonoBehaviour, ISpawnable {
 
     public enum ProfessorAction {
         move,
@@ -66,6 +66,13 @@ public class Professor : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!_nemesis)
+        {
+            if (RoomCameraManager._nemisis)
+            {
+                _nemesis = RoomCameraManager._nemisis.GetComponent<RoomWalker>();
+            }
+        }
         Think();
         if (_actionState == ActionState.complete) {
             Impatient();
@@ -362,9 +369,15 @@ public class Professor : MonoBehaviour {
     public void TouchWithDeath() {
         Debug.Log("The professor was touched by death!");
         _roomWalker.Stop();
+        RoomCameraManager.EndGame();
     }
 
     private void Complain(string complaint) {
         Debug.Log("The professor complains[" + complaint + "]");
+    }
+
+    public void OnSpawn(Room room)
+    {
+        
     }
 }

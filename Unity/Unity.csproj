@@ -332,13 +332,14 @@
     <Compile Include="Assets\Scripts\Camera\CameraSway.cs" />
     <Compile Include="Assets\Scripts\Camera\FocusCamera.cs" />
     <Compile Include="Assets\Scripts\Camera\Timer.cs" />
+    <Compile Include="Assets\Scripts\ISpawnable.cs" />
     <Compile Include="Assets\Scripts\MusicManager.cs" />
     <Compile Include="Assets\Scripts\Nemesis\Nemesis.cs" />
     <Compile Include="Assets\Scripts\Player\MakeNiceProtocol.cs" />
     <Compile Include="Assets\Scripts\Player\Professor.cs" />
-    <Compile Include="Assets\Scripts\Player\Room.cs" />
-    <Compile Include="Assets\Scripts\Player\RoomCameraManager.cs" />
     <Compile Include="Assets\Scripts\Rooms\Door.cs" />
+    <Compile Include="Assets\Scripts\Rooms\Room.cs" />
+    <Compile Include="Assets\Scripts\Rooms\RoomCameraManager.cs" />
     <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
     <Compile Include="Assets\Scripts\UI\CameraFeed.cs" />
     <Compile Include="Assets\Scripts\UI\CameraUISelectionManager.cs" />

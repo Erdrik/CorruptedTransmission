@@ -72,14 +72,14 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       focusDistance: 4.24
-      aperture: 2.5
+      aperture: 3.4
       focalLength: 50
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
     m_Enabled: 0
     m_Settings:
-      shutterAngle: 270
+      shutterAngle: 194
       sampleCount: 10
       frameBlending: 0
   eyeAdaptation:
@@ -113,24 +113,24 @@ MonoBehaviour:
     m_Settings:
       tonemapping:
         tonemapper: 2
-        neutralBlackIn: 0.0977
-        neutralWhiteIn: 10.36
-        neutralBlackOut: 0.0286
-        neutralWhiteOut: 9.73
-        neutralWhiteLevel: 10.44
-        neutralWhiteClip: 5.82
+        neutralBlackIn: 0.02
+        neutralWhiteIn: 10
+        neutralBlackOut: 0
+        neutralWhiteOut: 10
+        neutralWhiteLevel: 5.3
+        neutralWhiteClip: 10
       basic:
-        postExposure: 0.31
+        postExposure: 0
         temperature: 0
-        tint: 1.6
-        hueShift: 3
-        saturation: 1.613
-        contrast: 1.527
+        tint: 0
+        hueShift: 0
+        saturation: 1.272
+        contrast: 1.256
       channelMixer:
-        red: {x: 0.98, y: 0, z: 0}
+        red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
-        blue: {x: 0, y: 0.06, z: 0.92}
-        currentEditingChannel: 2
+        blue: {x: 0, y: 0, z: 1}
+        currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
@@ -149,14 +149,14 @@ MonoBehaviour:
             - serializedVersion: 2
               time: 0
               value: 0
-              inSlope: 0
+              inSlope: 1
               outSlope: 1
               tangentMode: 0
             - serializedVersion: 2
               time: 1
               value: 1
-              inSlope: 3.7641675
-              outSlope: 0
+              inSlope: 1
+              outSlope: 1
               tangentMode: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
@@ -226,7 +226,7 @@ MonoBehaviour:
               tangentMode: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
-            m_RotationOrder: 0
+            m_RotationOrder: 4
           m_Loop: 0
           m_ZeroValue: 0
           m_Range: 1
@@ -289,7 +289,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       colored: 1
-      intensity: 0.419
+      intensity: 0
       size: 3
       luminanceContribution: 1
   vignette:

@@ -41,23 +41,23 @@ public class EmotionalUI : MonoBehaviour {
         if (RoomCameraManager._professor)
         {
             _fearEmotion.overrideSprite = EmotionalStatusToImage(EvalutateEmotion(RoomCameraManager._professor._fear));
-            _distrustEmotion.overrideSprite = EmotionalStatusToImage(EvalutateEmotion(RoomCameraManager._professor._distrust));
+            _distrustEmotion.overrideSprite = EmotionalStatusToImage(EvalutateEmotion(1-RoomCameraManager._professor._distrust, true));
             _angerEmotion.overrideSprite = EmotionalStatusToImage(EvalutateEmotion(RoomCameraManager._professor._anger));
         }
     }
 
-    private EmotionStatus EvalutateEmotion(float emotionLevel)
+    private EmotionStatus EvalutateEmotion(float emotionLevel, bool flip = false)
     {
         if(emotionLevel <= _happyTheshold)
         {
-            return EmotionStatus.Happy;
+            return !flip ? EmotionStatus.Happy : EmotionStatus.Cry;
         }else if(emotionLevel <= _sadTheshold)
         {
             return EmotionStatus.Sad;
         }
         else
         {
-            return EmotionStatus.Cry;
+            return !flip ? EmotionStatus.Cry : EmotionStatus.Happy;
         }
     }
 
