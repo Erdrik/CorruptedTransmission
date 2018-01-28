@@ -44,6 +44,8 @@ public class Room : MonoBehaviour {
     public List<RoomDirection> _roomNeighbours;
     public bool _isRoot;
 
+    public ExitButton _exitButton;
+
     public string _tag;
 
     public void Awake()
@@ -135,6 +137,10 @@ public class Room : MonoBehaviour {
     public Transform GetRandomHidingPoint()
     {
         return GetRandomPoint(_hidingPoints);
+    }
+
+    public ExitButton GetExitButton() {
+        return _exitButton;
     }
 
 }
