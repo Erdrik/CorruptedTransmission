@@ -12,6 +12,8 @@ public class RoomUIPoint : MonoBehaviour {
     public float bufferA = -0.01f;
     public float bufferB = 3;
 
+    public Text _text;
+
     public void Start()
     {
         GetComponent<Button>().onClick.AddListener(GoToRoom);

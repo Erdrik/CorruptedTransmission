@@ -331,6 +331,8 @@
     <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSway.cs" />
     <Compile Include="Assets\Scripts\Camera\FocusCamera.cs" />
+    <Compile Include="Assets\Scripts\Camera\Timer.cs" />
+    <Compile Include="Assets\Scripts\MusicManager.cs" />
     <Compile Include="Assets\Scripts\Nemesis\Nemesis.cs" />
     <Compile Include="Assets\Scripts\Player\MakeNiceProtocol.cs" />
     <Compile Include="Assets\Scripts\Player\Professor.cs" />
@@ -341,6 +343,7 @@
     <Compile Include="Assets\Scripts\UI\CameraFeed.cs" />
     <Compile Include="Assets\Scripts\UI\CameraUISelectionManager.cs" />
     <Compile Include="Assets\Scripts\UI\CommandsManager.cs" />
+    <Compile Include="Assets\Scripts\UI\EmotionalUI.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIManager.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUIPoint.cs" />
     <Compile Include="Assets\Scripts\UI\SoundVisualiser.cs" />

@@ -6,6 +6,9 @@ public class Door : MonoBehaviour {
 
     public Transform _door;
 
+    public Room _roomA;
+    public Room _roomB;
+
     public Vector3 _closed;
     public Vector3 _open;
 
@@ -22,7 +25,9 @@ public class Door : MonoBehaviour {
 	void Start () {
         _locked = _locking;
         _startTime = 0.0f - _timeTaken;
-	}
+        _roomA.ToggleLockNeighbour(_roomB, _locked);
+        _roomB.ToggleLockNeighbour(_roomA, true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,18 +42,24 @@ public class Door : MonoBehaviour {
             }
             else if (_locked) {
                 _door.localPosition = Vector3.Lerp(_open, _closed, weight);
+                _roomA.ToggleLockNeighbour(_roomB, true);
+                _roomB.ToggleLockNeighbour(_roomA, true);
             }
             else {
                 _door.localPosition = Vector3.Lerp(_closed, _open, weight);
+                _roomA.ToggleLockNeighbour(_roomB, false);
+                _roomB.ToggleLockNeighbour(_roomA, false);
             }
         }
     }
 
     public void Lock() {
         _locking = true;
+        
     }
 
     public void Unlock() {
         _locking = false;
+        
     }
 }

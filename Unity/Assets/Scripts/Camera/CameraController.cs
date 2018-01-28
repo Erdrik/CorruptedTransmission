@@ -161,7 +161,6 @@ public class CameraController : MonoBehaviour {
     {
         while (_isRoaming && _yawRoam)
         {
-            Debug.Log("start");
             float currentPoint = _minYaw + (_currentYaw * _maxYaw);
             _audioSource.Play();
             while (currentPoint <= _maxYaw)

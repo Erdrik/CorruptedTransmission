@@ -11,6 +11,8 @@ public class RoomCameraManager : MonoBehaviour {
     public Camera _mainCamera;
     public CameraUISelectionManager _cameraUIManager;
 
+    public static Professor _professor;
+
     private static Camera _mainStaticCamera;
     private static Room _activeRoom;
 
@@ -42,6 +44,11 @@ public class RoomCameraManager : MonoBehaviour {
         else {
             return null;
         }
+    }
+
+    public static void RegisterProfessor(Professor p)
+    {
+        _professor = p;
     }
 
     public static void GoToRoom(Room room)

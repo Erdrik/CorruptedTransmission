@@ -45,6 +45,7 @@ public class CommandsManager : MonoBehaviour {
                 button.onClick.AddListener(() =>
                 {
                     MoveTo(r);
+                    CloseMoveMenu();
                 });
                 _placeButtons.Add(button);
             }

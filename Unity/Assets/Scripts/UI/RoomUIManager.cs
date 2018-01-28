@@ -131,6 +131,7 @@ public class RoomUIManager : MonoBehaviour {
 
             }
             point.BuildLinks();
+            point._text.text = position.x + "," + position.y;
         }
         return point;
     }

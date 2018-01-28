@@ -20,7 +20,7 @@ public enum Direction
 public class Room : MonoBehaviour {
 
     [System.Serializable]
-    public struct RoomDirection
+    public class RoomDirection
     {
         public Direction _roomDirecion;
         [Range(0,10)]
@@ -28,6 +28,7 @@ public class Room : MonoBehaviour {
         [Range(0, 10)]
         public int _yPadding;
         public Room _room;
+        public bool _isLocked;
         
     }
 
@@ -73,6 +74,18 @@ public class Room : MonoBehaviour {
         {
             if (camera != null) {
                 camera.SetRoom(this);
+            }
+        }
+    }
+
+    public void ToggleLockNeighbour(Room room, bool locked)
+    {
+        for (int i = 0; i < _roomNeighbours.Count; i++)
+        {
+            RoomDirection r = _roomNeighbours[i];
+            if (room == r._room && r._isLocked != locked)
+            {
+                r._isLocked = true;
             }
         }
     }

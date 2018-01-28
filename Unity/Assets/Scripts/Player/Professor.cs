@@ -21,7 +21,7 @@ public class Professor : MonoBehaviour {
         fear
     }
 
-    private Dictionary<string, Room> _knownRooms;
+    private Dictionary<string, Room> _knownRooms = new Dictionary<string, Room>();
 
     public RoomWalker _roomWalker;
     public RoomWalker _nemesis;
@@ -58,8 +58,10 @@ public class Professor : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        _knownRooms = new Dictionary<string, Room>();
+        //_knownRooms = new Dictionary<string, Room>();
+        RoomCameraManager.RegisterProfessor(this);
         Stop();
+        
     }
 
     // Update is called once per frame
