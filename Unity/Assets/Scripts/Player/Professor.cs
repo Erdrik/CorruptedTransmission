@@ -61,7 +61,9 @@ public class Professor : MonoBehaviour, ISpawnable {
         //_knownRooms = new Dictionary<string, Room>();
         RoomCameraManager.RegisterProfessor(this);
         Stop();
-        
+        _roomWalker._previousRoom = _roomWalker._currentRoom;
+
+
     }
 
     // Update is called once per frame
@@ -73,6 +75,8 @@ public class Professor : MonoBehaviour, ISpawnable {
                 _nemesis = RoomCameraManager._nemisis.GetComponent<RoomWalker>();
             }
         }
+        _roomWalker._previousRoom._uiPoint.ChangeColour(_roomWalker._previousRoom._uiPoint._professorColour);
+        _roomWalker._currentRoom._uiPoint.ChangeColour(_roomWalker._currentRoom._uiPoint._professorColour);
         Think();
         if (_actionState == ActionState.complete) {
             Impatient();
@@ -140,6 +144,7 @@ public class Professor : MonoBehaviour, ISpawnable {
     }
 
     private void CompleteAction() {
+        
         _actionState = ActionState.complete;
         _currentActionType = ProfessorAction.stop;
         Wait();
@@ -199,6 +204,7 @@ public class Professor : MonoBehaviour, ISpawnable {
                 break;
             case ActionState.during:
                 if (_roomWalker.AtDestination()) {
+                    
                     CompleteAction();
                 }
                 break;

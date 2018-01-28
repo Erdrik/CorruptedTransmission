@@ -180,6 +180,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRender: {fileID: 120766459042836582}
+  _backgroundImage: {fileID: 114862837082204820}
+  _normalColour: {r: 1, g: 1, b: 1, a: 1}
+  _professorColour: {r: 0, g: 1, b: 0, a: 1}
   bufferA: -0.01
   bufferB: 5
   _text: {fileID: 114006219700847972}

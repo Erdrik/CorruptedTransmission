@@ -93,7 +93,10 @@ public class RoomWalker : MonoBehaviour {
 
     public void EnterPreviousRoom() {
         EnterRoom(_previousRoom);
+        
     }
+
+    
 
     public void MoveTowards(Vector3 target) {
         _state = WalkerState.moving;

@@ -7,6 +7,7 @@ TagManager:
   - Room
   - Professor
   - Nemesis
+  - Camera
   layers:
   - Default
   - TransparentFX

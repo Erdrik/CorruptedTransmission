@@ -79,12 +79,12 @@ public class Room : MonoBehaviour {
 
     public void ProfessorEntered()
     {
-
+        _uiPoint.ChangeColour(_uiPoint._professorColour);
     }
 
     public void ProfessorExited()
     {
-
+        _uiPoint.ChangeColour(_uiPoint._normalColour);
     }
 
     private void InitaliseCameras()
