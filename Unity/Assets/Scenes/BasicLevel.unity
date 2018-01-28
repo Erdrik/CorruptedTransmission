@@ -23743,6 +23743,7 @@ MonoBehaviour:
     _room: {fileID: 1256578357}
     _isLocked: 0
   _isRoot: 0
+  _exitButton: {fileID: 0}
   _tag: Room Area 7
 --- !u!1 &466179626
 GameObject:
@@ -41563,7 +41564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &794744865
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64304,6 +64305,7 @@ MonoBehaviour:
     _room: {fileID: 1256578356}
     _isLocked: 0
   _isRoot: 1
+  _exitButton: {fileID: 0}
   _tag: Room Area 5
 --- !u!4 &1256578345
 Transform:
@@ -64512,6 +64514,7 @@ MonoBehaviour:
     _room: {fileID: 1256578357}
     _isLocked: 0
   _isRoot: 0
+  _exitButton: {fileID: 0}
   _tag: Room Area 3
 --- !u!114 &1256578354
 MonoBehaviour:
@@ -64556,6 +64559,7 @@ MonoBehaviour:
     _room: {fileID: 1256578353}
     _isLocked: 0
   _isRoot: 0
+  _exitButton: {fileID: 0}
   _tag: Room Area 2
 --- !u!114 &1256578355
 MonoBehaviour:
@@ -64606,6 +64610,7 @@ MonoBehaviour:
     _room: {fileID: 1256578357}
     _isLocked: 0
   _isRoot: 0
+  _exitButton: {fileID: 0}
   _tag: Room Area 1
 --- !u!114 &1256578356
 MonoBehaviour:
@@ -64643,6 +64648,7 @@ MonoBehaviour:
     _room: {fileID: 1256578344}
     _isLocked: 0
   _isRoot: 0
+  _exitButton: {fileID: 0}
   _tag: Room Area 6
 --- !u!114 &1256578357
 MonoBehaviour:
@@ -64707,6 +64713,7 @@ MonoBehaviour:
     _room: {fileID: 1256578344}
     _isLocked: 0
   _isRoot: 1
+  _exitButton: {fileID: 0}
   _tag: Room Area 4
 --- !u!1 &1257671852
 GameObject:
