@@ -29,6 +29,8 @@ public class Nemesis : MonoBehaviour {
     public RoomWalker _roomWalker;
     public RoomWalker _victim;
 
+    public Room _startRoom;
+
     public ActionState _actionState;
     public NemesisAction _currentActionType;
     public NemesisSpooky _spooky;
@@ -51,6 +53,7 @@ public class Nemesis : MonoBehaviour {
 	void Start () {
         _actionState = ActionState.complete;
         RoomCameraManager.RegisterNemisis(this);
+        _roomWalker._currentRoom = _startRoom;
 	}
 	
 	// Update is called once per frame
@@ -130,7 +133,6 @@ public class Nemesis : MonoBehaviour {
             int layerMaskFunc = 1 << LayerMask.NameToLayer("Nemesis");
             if (_chaseTarget == null) {
                 if (Physics.Raycast(_head.transform.position, TowardsWatch(), out _watchingRay, Mathf.Infinity, ~layerMaskFunc)) {
-                    Debug.Log(_watchingRay.collider.name);
                     if (_watchingRay.collider.CompareTag("Professor")) {
                         BeginChase(_watchingRay.transform);
                     }

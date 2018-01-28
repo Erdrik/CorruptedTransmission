@@ -87,12 +87,12 @@ public class Door : MonoBehaviour {
 
     public Transform GetNearestDoorPoint(Transform target) {
         float pointADistance = Vector3.Distance(target.position, _pointA.position);
-        float pointBDistance = Vector3.Distance(target.position, _pointA.position);
+        float pointBDistance = Vector3.Distance(target.position, _pointB.position);
         if (pointADistance >= pointBDistance) {
-            return _pointA;
+            return _pointB;
         }
         else {
-            return _pointB;
+            return _pointA;
         }
     }
 }

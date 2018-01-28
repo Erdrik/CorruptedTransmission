@@ -15,6 +15,7 @@ public class RoomCameraManager : MonoBehaviour {
     public static RoomCameraManager _instance;
 
     public Room _defaultRoom;
+    public Room _defaultNemisisRoom;
 
     public List<Room> _rooms;
     public Camera _mainCamera;
@@ -22,6 +23,7 @@ public class RoomCameraManager : MonoBehaviour {
 
     public List<GameObject> _menuScreens;
     public List<GameObject> _gameScreens;
+    public GameObject _winScreen;
 
     public Room _profSpawnRoom;
 
@@ -53,6 +55,11 @@ public class RoomCameraManager : MonoBehaviour {
     public void Update()
     {
         
+    }
+
+    public void ShowWinScreen(bool b)
+    {
+        _winScreen.SetActive(b);
     }
 
     public void RunGameScreens()
@@ -108,8 +115,7 @@ public class RoomCameraManager : MonoBehaviour {
         {
             foreach (Room.SpawnRequest requst in r._spawnRequests)
             {
-                GameObject obj = Instantiate(requst._spawnItem);
-                obj.transform.position = requst._spawn.position;
+                GameObject obj = Instantiate(requst._spawnItem,requst._spawn.position,requst._spawn.rotation);
             }
         }
     }
@@ -117,12 +123,14 @@ public class RoomCameraManager : MonoBehaviour {
     public static void RegisterProfessor(Professor p)
     {
         _professor = p;
+        p._roomWalker._currentRoom = _instance._defaultRoom;
         CheckIfSpawned();
     }
 
     public static void RegisterNemisis(Nemesis n)
     {
         _nemisis = n;
+        n._startRoom = _instance._defaultNemisisRoom;
         CheckIfSpawned();
     }
 

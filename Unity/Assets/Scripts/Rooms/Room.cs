@@ -56,6 +56,8 @@ public class Room : MonoBehaviour {
     public ExitButton _exitButton;
     public List<Door> _doors;
 
+    private List<Collider> _colliders;
+
     public string _tag;
 
     public void Awake()
@@ -77,7 +79,6 @@ public class Room : MonoBehaviour {
 
     public void Start()
     {
-
     }
 
     public void ProfessorEntered()
@@ -198,6 +199,24 @@ public class Room : MonoBehaviour {
         }
 
         return nearest;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        RoomWalker walker = other.GetComponent<RoomWalker>();
+        if (walker)
+        {
+            walker.OnEnterRoom(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        RoomWalker walker = other.GetComponent<RoomWalker>();
+        if (walker)
+        {
+            walker.OnLeaveRoom(this);
+        }
     }
 
 }

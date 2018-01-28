@@ -143,6 +143,7 @@ public class Professor : MonoBehaviour {
     private void Impatient() {
         float currentTime = Time.time;
         if (currentTime > _waitingUntil) {
+            Debug.Log("IMPATIENT");
             ChangeAction((ProfessorAction)Random.Range((int)ProfessorAction.getOut, (int)ProfessorAction.actionLimit), false);
         }
     }
@@ -160,7 +161,7 @@ public class Professor : MonoBehaviour {
     }
 
     private float GetPatienceLength() {
-        return Random.Range(_minWait, _maxWait) - (_distrust + (_anger * 4.0f) + (_fear * 2.0f));
+        return Random.Range(_minWait, _maxWait) - ((_distrust) + (_anger) + (_fear));
     }
 
     private void ChangeAction(ProfessorAction action, bool instruction) {
@@ -192,6 +193,7 @@ public class Professor : MonoBehaviour {
     }
 
     private void Wait() {
+        Debug.Log("Wait");
         _waitingUntil = Time.time + GetPatienceLength();
     }
 
@@ -328,7 +330,8 @@ public class Professor : MonoBehaviour {
                 }
                 break;
             case ActionState.during:
-                if (_button.Activated) {
+                if (_button != null &&
+                    _button.Activated) {
                     AdjustEmotion(-_major, -_major, -_major);
                     _button = null;
                     CompleteAction();
@@ -336,9 +339,9 @@ public class Professor : MonoBehaviour {
                 else if (_roomWalker.AtDestination()) {
                     Debug.LogError("The professor did not push button when reached it!");
                     _button = null;
-                    CompleteAction();
                 }
-                else if (_reach.gameObject.activeSelf == false &&
+
+                if (_reach.gameObject.activeSelf == false &&
                         _roomWalker._agent.remainingDistance < _startReaching) {
                     StartReach();
                 }
@@ -366,15 +369,13 @@ public class Professor : MonoBehaviour {
                     CompleteAction();
                 }
                 else if (_roomWalker.AtDestination()) {
-                    Debug.LogError("The professor did not lock door when reached it!");
                     _button = null;
-                    CompleteAction();
                 }
-                else {
-                    if (_reach.gameObject.activeSelf == false &&
-                        _roomWalker._agent.remainingDistance < _startReaching) {
-                        StartReach();
-                    }
+                if (_reach.gameObject.activeSelf == false &&
+                    _roomWalker._agent.remainingDistance < _startReaching &&
+                    _door != null &&
+                    _door.Locked != _doorLock) {
+                    StartReach();
                 }
                 break;
         }
@@ -467,6 +468,7 @@ public class Professor : MonoBehaviour {
     }
 
     public void InstructDoor() {
+        Debug.Log("Instruct Door");
         ChangeAction(ProfessorAction.door, true);
     }
 
@@ -485,10 +487,12 @@ public class Professor : MonoBehaviour {
         }
     }
     private void StartReach() {
+        Debug.Log("Start Reach");
         _reach.gameObject.SetActive(true);
     }
 
     public void DropReach() {
+        Debug.Log("Drop Reach");
         _reach.gameObject.SetActive(false);
     }
 }

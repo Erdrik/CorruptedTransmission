@@ -6,5 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TestingGroundsOfDoom/Testing Life.unity
-    guid: 5cae6a94f991736449c142d84c529ba2
+    path: Assets/Scenes/BasicLevel.unity
+    guid: cc6d1514140d09342bae7d4738902bfc

@@ -25,6 +25,7 @@ public class ExitButton : MonoBehaviour {
 	}
 
     private void OnTriggerEnter(Collider other) {
+        Debug.Log("OnTriggerEnter");
         if (other.CompareTag("Professor") && 
             !_exit.IsActivated(_id)) {
             _exit.Activate(_id);

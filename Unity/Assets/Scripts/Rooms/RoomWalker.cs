@@ -37,7 +37,7 @@ public class RoomWalker : MonoBehaviour {
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward);
     }
-
+    /*
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Room")) {
             _currentRoom = other.GetComponentInParent<Room>();
@@ -48,6 +48,17 @@ public class RoomWalker : MonoBehaviour {
         if (other.CompareTag("Room")) {
             _previousRoom = other.GetComponentInParent<Room>();
         }
+    }*/
+
+    public void OnEnterRoom(Room room)
+    {
+        
+        _currentRoom = room;
+    }
+
+    public void OnLeaveRoom(Room room)
+    {
+        _previousRoom = room;
     }
 
     public bool AtDestination() {

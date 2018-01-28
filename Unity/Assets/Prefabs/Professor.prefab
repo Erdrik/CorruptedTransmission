@@ -443,6 +443,7 @@ GameObject:
   - component: {fileID: 114637364315612198}
   - component: {fileID: 195169258766119516}
   - component: {fileID: 54385328011685926}
+  - component: {fileID: 65048567787548886}
   m_Layer: 0
   m_Name: Professor
   m_TagString: Professor
@@ -3626,7 +3627,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4130602115019428}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4032919410750706
 Transform:
@@ -7153,6 +7154,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65048567787548886
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117383698732134}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65278894183863530
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -7160,7 +7173,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855064153366704}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 2}
@@ -7199,6 +7212,7 @@ MonoBehaviour:
   _currentActionType: 0
   _previousActionType: 0
   _lastInstruction: 0
+  _currentActionIsOwnIdea: 0
   _distrust: 0
   _anger: 0
   _fear: 0
@@ -7207,13 +7221,16 @@ MonoBehaviour:
   _moderate: 0.35
   _major: 0.75
   _waitingUntil: 0
-  _minWait: 0
-  _maxWait: 0
-  _varianceWait: 0
+  _minWait: 4
+  _maxWait: 8
+  _varianceWait: 2
   _mentionedRoom: {fileID: 0}
   _targetRoom: {fileID: 0}
   _reach: {fileID: 4027596338121344}
+  _startReaching: 5
   _button: {fileID: 0}
+  _door: {fileID: 0}
+  _doorLock: 0
 --- !u!114 &114637364315612198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7252,7 +7269,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1117383698732134}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50

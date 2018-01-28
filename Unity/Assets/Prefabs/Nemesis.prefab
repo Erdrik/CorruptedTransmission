@@ -118,10 +118,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4396678038626062}
-  - component: {fileID: 65484308841393158}
   m_Layer: 8
   m_Name: Cube
-  m_TagString: Nemesis
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +137,7 @@ GameObject:
   - component: {fileID: 114975474971849292}
   - component: {fileID: 195314837441889172}
   - component: {fileID: 54118503782333678}
+  - component: {fileID: 65620623712063810}
   m_Layer: 8
   m_Name: Nemesis
   m_TagString: Nemesis
@@ -538,12 +538,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65484308841393158
+--- !u!65 &65620623712063810
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1671354035881826}
+  m_GameObject: {fileID: 1703660196762452}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -580,6 +580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomWalker: {fileID: 114975474971849292}
   _victim: {fileID: 0}
+  _startRoom: {fileID: 0}
   _actionState: 0
   _currentActionType: 1
   _spooky: 0
@@ -591,7 +592,7 @@ MonoBehaviour:
   _chaseTarget: {fileID: 0}
   _roamSpeed: 3
   _chaseSpeed: 5
-  _touchDistance: 1
+  _touchDistance: 2
 --- !u!114 &114975474971849292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -617,7 +618,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1703660196762452}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
