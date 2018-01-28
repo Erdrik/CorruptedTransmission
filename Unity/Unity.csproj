@@ -331,6 +331,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSway.cs" />
     <Compile Include="Assets\Scripts\Camera\FocusCamera.cs" />
+    <Compile Include="Assets\Scripts\Camera\FocusCameraPoint.cs" />
     <Compile Include="Assets\Scripts\Camera\Timer.cs" />
     <Compile Include="Assets\Scripts\ISpawnable.cs" />
     <Compile Include="Assets\Scripts\MusicManager.cs" />
