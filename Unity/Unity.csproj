@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CF118143-7E37-744F-BE45-3F55345FEC40}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp.dll</AssemblyName>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
@@ -327,33 +327,41 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\Audio\MusicManager.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSway.cs" />
+    <Compile Include="Assets\Scripts\Camera\CCTVCameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\FocusCamera.cs" />
     <Compile Include="Assets\Scripts\Camera\FocusCameraPoint.cs" />
     <Compile Include="Assets\Scripts\Camera\Timer.cs" />
-    <Compile Include="Assets\Scripts\ISpawnable.cs" />
-    <Compile Include="Assets\Scripts\MusicManager.cs" />
-    <Compile Include="Assets\Scripts\Nemesis\Nemesis.cs" />
-    <Compile Include="Assets\Scripts\Player\MakeNiceProtocol.cs" />
-    <Compile Include="Assets\Scripts\Player\Professor.cs" />
-    <Compile Include="Assets\Scripts\Rooms\Door.cs" />
-    <Compile Include="Assets\Scripts\Rooms\ExitButton.cs" />
-    <Compile Include="Assets\Scripts\Rooms\ExitDoor.cs" />
-    <Compile Include="Assets\Scripts\Rooms\ExitLight.cs" />
-    <Compile Include="Assets\Scripts\Rooms\Room.cs" />
-    <Compile Include="Assets\Scripts\Rooms\RoomCameraManager.cs" />
-    <Compile Include="Assets\Scripts\Rooms\RoomWalker.cs" />
-    <Compile Include="Assets\Scripts\Rooms\WinRoom.cs" />
-    <Compile Include="Assets\Scripts\UI\CameraFeed.cs" />
-    <Compile Include="Assets\Scripts\UI\CameraUISelectionManager.cs" />
-    <Compile Include="Assets\Scripts\UI\CommandsManager.cs" />
-    <Compile Include="Assets\Scripts\UI\EmotionalUI.cs" />
-    <Compile Include="Assets\Scripts\UI\RoomUIManager.cs" />
-    <Compile Include="Assets\Scripts\UI\RoomUIPoint.cs" />
+    <Compile Include="Assets\Scripts\Core\EditorUtilities\JoshHandles.cs" />
+    <Compile Include="Assets\Scripts\Core\ISpawnable.cs" />
+    <Compile Include="Assets\Scripts\Core\Polygon\Polygon.cs" />
+    <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\MakeNice\MakeNiceProtocol.cs" />
+    <Compile Include="Assets\Scripts\Misc\UIColour.cs" />
+    <Compile Include="Assets\Scripts\Structure\Floor.cs" />
+    <Compile Include="Assets\Scripts\Structure\Level.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\Door.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\ExitButton.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\ExitDoor.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\ExitLight.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\RoomCameraManager.cs" />
+    <Compile Include="Assets\Scripts\Structure\Misc\WinRoom.cs" />
+    <Compile Include="Assets\Scripts\Structure\Room.cs" />
+    <Compile Include="Assets\Scripts\UI\CCTV\CameraFeed.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\CameraUISelectionManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\CommandsManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\ControlScreenManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\ControlStationManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\EmotionalUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\RoomUIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Control Screens\RoomUIPoint.cs" />
     <Compile Include="Assets\Scripts\UI\SoundVisualiser.cs" />
-    <Compile Include="Assets\Scripts\UIColour.cs" />
+    <Compile Include="Assets\Scripts\Walkers\Nemesis.cs" />
+    <Compile Include="Assets\Scripts\Walkers\Professor.cs" />
+    <Compile Include="Assets\Scripts\Walkers\RoomWalker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
